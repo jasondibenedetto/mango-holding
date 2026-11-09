@@ -169,6 +169,12 @@ const waiting = logos.slice(cardCount);
     grid-template-columns: repeat(var(--logo-cols), minmax(0, 1fr));
   }
 
+  /* Each card gets its own layer up front so a flip doesn't hitch on its first frame. */
+  .logo-grid > li {
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
   .logo-grid > li:nth-child(n + 7) {
     display: none;
 

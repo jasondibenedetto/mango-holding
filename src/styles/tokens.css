@@ -406,9 +406,9 @@
      Every logo-flip-every a wave of cards flips to the next clients, rippling out logo-flip-ripple
      per card from a random start. */
   --logo-cols: 2;
-  --logo-flip-every: 2.5s;
-  --logo-flip-ripple: 60ms;
-  --logo-flip-speed: 620ms;
+  --logo-flip-every: 3s;
+  --logo-flip-ripple: 70ms;
+  --logo-flip-speed: 760ms;
 
   /* Corner smoothing, Figma's 60% (iOS). corner-shape and corner-scale are fitted to Figma's
      curve, within half a pixel. corner-mask is Figma's exact corner at radius 100, for Safari. */

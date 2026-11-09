@@ -131,11 +131,17 @@
       transparent 105%
     );
     opacity: 0;
-    transition: opacity var(--duration-base) var(--ease-standard);
+    /* Hidden at rest so the noise doesn't paint, after the fade out has played. */
+    visibility: hidden;
+    transition:
+      opacity var(--duration-base) var(--ease-standard),
+      visibility 0s var(--duration-base);
   }
 
   [data-tilt].is-tilting::after {
     opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
   }
 
   /* data-tilt-magnet on a child leans it up to magnet-px toward the pointer and lifts it
