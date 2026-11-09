@@ -3,12 +3,26 @@ export const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
 
 export const site = {
   name: 'Mango Chutney',
-  title: 'Mango Chutney | Design and engineering studio, Adelaide',
+  title: 'Mango Chutney | Creative digital agency, Adelaide',
   tagline: 'Design with relish.',
   description:
     'Senior specialists who join your team, work in your tools and bring the expertise you’re missing. First release live within 30 days.',
+  /** For search results and link previews, worded for the searches the previous site ranked for. */
+  metaDescription:
+    'Adelaide creative digital agency. Senior designers and engineers for branding, web and app design and development, embedded in your team.',
   locale: 'en_AU',
   email: 'hello@mangochutney.com.au', // TODO: confirm
+  telephone: '+61877042233',
+  keywords: [
+    'Graphic design',
+    'Branding',
+    'Web design',
+    'App design',
+    'Web development',
+    'App development',
+    'Design systems',
+    'Shopify',
+  ],
   address: ['367c Magill Road', 'St Morris, South Australia'],
   acknowledgement:
     'Mango Chutney acknowledges the Kaurna people, the Traditional Owners of the land where we work, and pays respect to Elders past and present.',
@@ -18,8 +32,8 @@ export const site = {
 
   footer: {
     follow: [
-      { label: 'LinkedIn', href: 'https://www.linkedin.com/company/mango-chutney' }, // TODO: confirm
-      { label: 'Instagram', href: 'https://www.instagram.com/mangochutney' }, // TODO: confirm
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/company/mango-chutney' },
+      { label: 'Instagram', href: 'https://www.instagram.com/mangochutneydesign' },
     ],
   },
 

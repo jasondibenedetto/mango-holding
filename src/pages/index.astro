@@ -5,26 +5,43 @@ import ClientLogos from '../components/ClientLogos.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 import { site } from '../lib/site';
 
+const url = Astro.site!.href;
 const schema = [
   {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': 'ProfessionalService',
+    '@id': `${url}#organization`,
     name: site.name,
-    url: Astro.site?.href,
-    logo: new URL('/favicon.svg', Astro.site).href,
-    description: site.description,
+    url,
+    logo: new URL('/favicon.svg', url).href,
+    image: new URL('/og-image.jpg', url).href,
+    description: site.metaDescription,
     email: site.email,
+    telephone: site.telephone,
     areaServed: 'AU',
-    sameAs: site.footer.follow.map(({ href }) => href),
+    knowsAbout: site.keywords,
+    sameAs: [
+      ...site.footer.follow.map(({ href }) => href),
+      'https://www.facebook.com/mangochutneydesign',
+      'https://x.com/mangochutneyau',
+    ],
     address: {
       '@type': 'PostalAddress',
-      streetAddress: site.address[0],
+      streetAddress: 'Level 1/367c Magill Road',
       addressLocality: 'St Morris',
       addressRegion: 'SA',
+      postalCode: '5068',
       addressCountry: 'AU',
     },
   },
-  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: Astro.site?.href },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${url}#website`,
+    name: site.name,
+    url,
+    publisher: { '@id': `${url}#organization` },
+  },
 ];
 ---
 

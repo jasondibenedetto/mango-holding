@@ -16,7 +16,7 @@ export interface Props {
 
 const {
   title,
-  description = site.description,
+  description = site.metaDescription,
   image,
   imageAlt = site.name,
   type = 'website',
@@ -32,7 +32,7 @@ const ogImage = image
       (await getImage({ src: image, width: 1200, height: 630, format: 'jpg' })).src,
       Astro.site,
     )
-  : new URL('/og-default.jpg', Astro.site);
+  : new URL('/og-image.jpg', Astro.site);
 ---
 
 <title>{fullTitle}</title>
@@ -51,5 +51,6 @@ const ogImage = image
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={imageAlt} />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@mangochutneyau" />
 
 {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

@@ -1,0 +1,9 @@
+# Pages from the previous site. Temporary until the full site brings them back.
+/about / 302
+/contact /#contact 302
+/work / 302
+/work/* / 302
+/mango-press-2021 / 302
+/mango-press-2022 / 302
+/favicon.gif /favicon.ico 301
+/sitemap.xml /sitemap-index.xml 301
