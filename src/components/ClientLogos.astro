@@ -152,8 +152,13 @@ const waiting = logos.slice(cardCount);
       ready.forEach(({ card, distance }, i) => flip(card, logos[i], distance * ripple));
     };
 
-    grid.addEventListener('pointerenter', () => (paused = true));
+    grid.addEventListener('pointerenter', (e) => {
+      if (e.pointerType === 'mouse') {
+        paused = true;
+      }
+    });
     grid.addEventListener('pointerleave', () => (paused = false));
+    grid.addEventListener('pointercancel', () => (paused = false));
     new IntersectionObserver(([entry]) => (visible = entry.isIntersecting)).observe(grid);
     setInterval(wave, every);
   });
