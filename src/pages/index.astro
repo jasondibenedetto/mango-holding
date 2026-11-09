@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import ClientLogos from '../components/ClientLogos.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import { site } from '../lib/site';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: site.name,
+    url: Astro.site?.href,
+    logo: new URL('/favicon.svg', Astro.site).href,
+    description: site.description,
+    email: site.email,
+    areaServed: 'AU',
+    sameAs: site.footer.follow.map(({ href }) => href),
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: site.address[0],
+      addressLocality: 'St Morris',
+      addressRegion: 'SA',
+      addressCountry: 'AU',
+    },
+  },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: Astro.site?.href },
+];
+---
+
+<BaseLayout theme="cobalt" footerTheme="hedgehog" schema={schema}>
+  {/* One colour behind the hero and clients that fades to cream as you scroll. */}
+  <div data-scroll-fade data-theme="cobalt">
+    <Section
+      theme="cobalt"
+      pad={false}
+      class="flex flex-col gap-stack-l bg-transparent pt-[calc(var(--spacing-hero-top)+var(--spacing-stack-xl))] pb-section"
+    >
+      <h1 class="text-display-l max-w-measure-display text-headline">
+        Design and engineering for teams building world‑class digital products.
+      </h1>
+      <p class="text-body-l max-w-measure">{site.description}</p>
+    </Section>
+
+    <Section
+      theme="cobalt"
+      pad={false}
+      class="bg-transparent pb-section"
+      aria-label="Clients"
+      data-scroll-fade-track
+    >
+      <ClientLogos />
+    </Section>
+  </div>
+
+  <ContactPanel />
+</BaseLayout>
+
+<script>
+  import '../scripts/scroll-fade';
+</script>
+
+<style>
+  /* The contact form selections are cobalt and the section fades to white. */
+  :global(#contact) {
+    --t-form-selected: var(--color-a2-cobalt);
+    --t-form-selected-fg: var(--color-a2-cream);
+    background-image: linear-gradient(var(--color-form-bg) 56%, var(--color-white));
+  }
+
+  /* Logo cards turn white once the fade reaches cream so they stand off it. */
+  [data-scroll-fade] :global([data-theme='light']) {
+    --t-card: var(--color-white);
+  }
+
+  /* Type and cards ease across when the fade flips the theme. */
+  [data-scroll-fade] :global(:is(h1, p, ul > li)) {
+    transition-property: color, background-color;
+    transition-duration: var(--duration-base);
+    transition-timing-function: var(--ease-standard);
+  }
+</style>

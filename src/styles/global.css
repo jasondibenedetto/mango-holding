@@ -1,0 +1,358 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+@layer base {
+  /* html is only seen past the page (overscroll, and the status bar and toolbar,
+     which Safari 26 tints from it): it takes the colour at whichever end is nearer
+     (src/scripts/edge.ts). main carries the page background. */
+  html {
+    @apply font-sans text-fg antialiased;
+    background-color: var(--edge-top, var(--t-bg));
+    text-size-adjust: none;
+    scroll-behavior: smooth;
+    hanging-punctuation: first;
+  }
+
+  /* No widows: headings balance their lines and running text avoids a lone last word. */
+  :where(h1, h2, h3, h4) {
+    text-wrap: balance;
+  }
+
+  :where(p, li, dd, blockquote, figcaption) {
+    text-wrap: pretty;
+  }
+
+  /* Images fade in over their placeholder colour once loaded (Media sets data-fade). */
+  @media (scripting: enabled) {
+    img[data-fade] {
+      transition: opacity var(--duration-slow) var(--ease-standard);
+    }
+
+    img[data-fade]:not([data-loaded]) {
+      opacity: 0;
+    }
+  }
+
+  body {
+    @apply text-body-m;
+    min-height: 100svh;
+  }
+
+  /* Every section sets a theme; bg and text follow it. */
+  [data-theme] {
+    background-color: var(--t-bg);
+    color: var(--t-fg);
+  }
+
+  html[data-edge-end='bottom'] {
+    background-color: var(--edge-bottom, var(--t-bg));
+  }
+
+  /* Tailwind's preflight gives buttons the default cursor. */
+  :where(button, [role='button']):not(:disabled, [aria-disabled='true']) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-focus;
+  }
+
+  ::selection {
+    @apply bg-accent text-accent-fg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Pages cross-fade, and a work tile grows into its case study cover (Safari 18.2+, Chrome). */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(*) {
+  animation-duration: var(--duration-spring-menu);
+  animation-timing-function: var(--ease-spring-menu);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--duration-base);
+  animation-timing-function: var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* Tilt: add data-tilt to a card (src/scripts/tilt.ts sets --tilt-x/y while the pointer is
+   over it). It pivots toward the pointer, a soft grainy glow sits opposite the pointer, and it springs
+   back flat on leave. Tune a card with --tilt-max, --tilt-perspective, --tilt-shine and --tilt-glare. */
+@layer components {
+  [data-tilt] {
+    position: relative;
+    transition: transform var(--duration-spring-playful) var(--ease-spring-playful);
+  }
+
+  [data-tilt].is-tilting {
+    transform: perspective(var(--tilt-perspective))
+      rotateX(calc(var(--tilt-y, 0) * var(--tilt-max) * -1))
+      rotateY(calc(var(--tilt-x, 0) * var(--tilt-max)));
+    transition: transform 140ms var(--ease-standard);
+  }
+
+  [data-tilt]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    /* A white glow with fine grain, centred on the pointer and fading out radially. */
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .24 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      color-mix(in srgb, var(--color-white) var(--tilt-shine), transparent);
+    mask-image: radial-gradient(
+      circle at calc(50% + var(--tilt-x, 0) * var(--tilt-glare) * 50%)
+        calc(50% + var(--tilt-y, 0) * var(--tilt-glare) * 50%),
+      black,
+      transparent 105%
+    );
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-standard);
+  }
+
+  [data-tilt].is-tilting::after {
+    opacity: 1;
+  }
+
+  /* data-tilt-magnet on a child leans it up to magnet-px toward the pointer and lifts it
+     above the glow, so it keeps its flat colour. */
+  [data-tilt-magnet] {
+    position: relative;
+    z-index: 1;
+    transition: translate var(--duration-spring-playful) var(--ease-spring-playful);
+  }
+
+  .is-tilting [data-tilt-magnet] {
+    translate: calc(var(--tilt-x, 0) * var(--magnet-px) * 1px)
+      calc(var(--tilt-y, 0) * var(--magnet-px) * 1px);
+    transition: translate 140ms var(--ease-standard);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-tilt].is-tilting {
+      transform: none;
+    }
+  }
+}
+
+/* Figma's 60% corner smoothing on the radius tokens. Pills and dots stay round, as in Figma.
+   Chromium draws it with corner-shape. Safari has no corner-shape yet, so it masks with
+   Figma's exact corner, which also trims focus rings, so those move inside the edge there.
+   Firefox keeps plain round corners. */
+@layer utilities {
+  .rounded-s {
+    --corner: var(--radius-s);
+  }
+
+  .rounded-m {
+    --corner: var(--radius-m);
+  }
+
+  .rounded-l {
+    --corner: var(--radius-l);
+  }
+
+  .rounded-field {
+    --corner: var(--radius-field);
+  }
+
+  @supports (corner-shape: superellipse(2)) {
+    :is(.rounded-s, .rounded-m, .rounded-l, .rounded-field) {
+      border-radius: calc(var(--corner) * var(--corner-scale));
+      corner-shape: var(--corner-shape);
+    }
+  }
+
+  @supports (-webkit-mask-box-image: none) and (not (corner-shape: superellipse(2))) {
+    :is(.rounded-s, .rounded-m, .rounded-l, .rounded-field) {
+      -webkit-mask-box-image: var(--corner-mask) 160 / calc(var(--corner) * 1.6) stretch;
+    }
+
+    :is(.rounded-s, .rounded-m, .rounded-l, .rounded-field):focus-visible {
+      outline-offset: -4px;
+    }
+  }
+}
+
+/* Tap feedback: shrinks to press-scale while held (add scale to the element's transition). */
+@utility press {
+  &:active {
+    scale: var(--press-scale);
+  }
+}
+
+/* Divider line along the top, a hairline on Retina screens. */
+@utility hairline-t {
+  border-top: var(--border-hairline) solid var(--color-border);
+}
+
+/* Scroll-linked reveals (Safari 26, Chrome; static elsewhere): images settle from a slight
+   zoom and headings rise in as they enter. They follow the scroll, so nothing waits on a timer. */
+@utility reveal-media {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+  }
+}
+
+@utility reveal {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 90%;
+    }
+  }
+}
+
+@keyframes settle {
+  from {
+    scale: 1.06;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 var(--spacing-stack-m);
+  }
+}
+
+/* Page margin on the Figma grid (grid/margin). Past the 3xl frame the content stops
+   at size/content-max and centres; the section's own background still runs full width. */
+@utility container-site {
+  width: 100%;
+  padding-inline: max(var(--spacing-margin), (100% - var(--container-content-max)) / 2);
+}
+
+/* The Figma layout grid: 4 columns, 8 from md, 12 from lg, grid/gutter apart.
+   Place children with col-span-*; inside container-site it lines up with the page grid. */
+@utility grid-site {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--spacing-gutter);
+}
+
+/* Text link whose underline draws in from the left on hover and focus (footer v20). */
+@utility link-draw {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 -2px;
+    height: 1.5px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-base) var(--ease-standard);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Skip rendering work for below-the-fold sections until they approach the viewport. */
+@utility section-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* Case study story: heading left, copy right (Figma: 03 Story). */
+@utility prose-story {
+  display: grid;
+  gap: var(--spacing-stack-m) var(--spacing-gutter);
+  align-items: start;
+
+  & h2 {
+    @apply text-heading-m;
+    margin-top: var(--spacing-stack-l);
+  }
+
+  & h2:first-child {
+    margin-top: 0;
+  }
+
+  & > :not(h2) {
+    @apply text-body-l;
+    max-width: var(--container-measure);
+  }
+
+  @media (min-width: 48rem) {
+    grid-template-columns: 1fr 1fr;
+
+    & h2 {
+      grid-column: 1;
+    }
+
+    & > :not(h2) {
+      grid-column: 2;
+    }
+
+    & h2 + :not(h2) {
+      margin-top: var(--spacing-stack-l);
+    }
+
+    & h2:first-child + :not(h2) {
+      margin-top: 0;
+    }
+  }
+}
+
+/* Long-form Markdown content (generic pages). */
+@utility prose-content {
+  @apply text-body-l;
+
+  & > * + * {
+    margin-top: 1em;
+  }
+
+  & h2 {
+    @apply mt-stack-l text-heading-m;
+  }
+
+  & h3 {
+    @apply mt-stack-m text-heading-s;
+  }
+
+  & ul {
+    @apply list-disc pl-5;
+  }
+
+  & ol {
+    @apply list-decimal pl-5;
+  }
+
+  & a {
+    @apply underline decoration-accent underline-offset-4;
+  }
+}

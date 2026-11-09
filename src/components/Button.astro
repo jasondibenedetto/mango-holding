@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
+
+type Props = {
+  variant?: 'primary' | 'ink' | 'secondary' | 'ghost' | 'text';
+  href?: string;
+  arrow?: boolean;
+  full?: boolean;
+  class?: string;
+} & Omit<HTMLAttributes<'button'>, 'class'>;
+
+const {
+  variant = 'primary',
+  href,
+  arrow = variant !== 'secondary',
+  full = false,
+  class: className,
+  type = 'button',
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+
+const variants = {
+  primary: 'bg-action text-action-fg hover:bg-action-hover px-stack-m',
+  ink: 'bg-action-ink text-action-ink-fg hover:bg-action-ink-hover px-stack-m',
+  secondary: 'border-[1.5px] border-fg text-fg hover:bg-bg-elevated px-stack-m',
+  ghost: 'text-fg hover:bg-bg-elevated px-stack-m',
+  text: 'text-fg hover:underline underline-offset-4',
+};
+---
+
+<Tag
+  href={href}
+  type={href ? undefined : type}
+  class:list={[
+    'group text-label rounded-pill press min-h-tap inline-flex items-center justify-center gap-inline-s py-inline-m whitespace-nowrap transition-[background-color,gap,scale] duration-fast ease-standard hover:gap-inline-m',
+    variants[variant],
+    full && 'w-full',
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+  {arrow && <Icon name="arrow" />}
+</Tag>

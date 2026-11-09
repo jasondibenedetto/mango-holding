@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../lib/site';
+---
+
+<!-- Where the contact form lands when it posts without JavaScript. -->
+<BaseLayout title="Thanks, we’re on it" noindex>
+  <Section
+    pad={false}
+    class="flex flex-col items-start gap-stack-l min-h-hero-min justify-end pt-hero-top pb-stack-l"
+  >
+    <p class="bg-action-ink text-action-ink-fg text-label rounded-pill inline-flex items-center gap-inline-s px-inline-m py-inline-s">
+      <Icon name="check" size={16} />
+      Sent
+    </p>
+    <h1 class="text-display-l">Thanks. We’re on it.</h1>
+    <p class="text-body-l max-w-measure text-fg-muted">
+      Your brief is in. A lead mango will read what you sent and reply by email within the next
+      business day.
+    </p>
+    <Button href="/" variant="ink">
+      Back to home
+    </Button>
+    <p class="text-caption text-fg-muted">
+      Something to add? Email{' '}
+      <a href={`mailto:${site.email}`} class="underline underline-offset-2">
+        {site.email}
+      </a>
+      .
+    </p>
+  </Section>
+</BaseLayout>

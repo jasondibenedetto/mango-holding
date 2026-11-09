@@ -1,0 +1,34 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+export type Theme =
+  | 'light'
+  | 'grey'
+  | 'orange'
+  | 'yellow'
+  | 'blue'
+  | 'green'
+  | 'aqua'
+  | 'pink'
+  | 'ultraviolet'
+  | 'hedgehog'
+  | 'cobalt';
+
+type Props = {
+  theme?: Theme;
+  pad?: boolean;
+  /** Not for above the fold sections */
+  lazy?: boolean;
+  class?: string;
+} & Omit<HTMLAttributes<'section'>, 'class'>;
+
+const { theme = 'light', pad = true, lazy = false, class: className, ...rest } = Astro.props;
+---
+
+<section
+  data-theme={theme}
+  class:list={['container-site', pad && 'py-section', lazy && 'section-lazy', className]}
+  {...rest}
+>
+  <slot />
+</section>

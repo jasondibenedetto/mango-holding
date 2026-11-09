@@ -1,0 +1,337 @@
+---
+import { site } from '../lib/site';
+import Logo from './Logo.astro';
+import type { Theme } from './Section.astro';
+
+interface Props {
+  theme?: Theme;
+}
+
+const { theme = 'orange' } = Astro.props;
+
+// The footer takes the page's section colour; light and grey pages close in orange.
+const presets = ['orange', 'hedgehog', 'green', 'yellow', 'pink', 'blue', 'aqua', 'ultraviolet'];
+const preset = presets.includes(theme) ? theme : 'orange';
+
+const columns = [
+  { title: 'Studio', items: site.address.map((label) => ({ label })) },
+  { title: 'Say Hello', items: [{ label: site.email, href: `mailto:${site.email}` }] },
+  { title: 'Follow', items: site.footer.follow },
+] as { title: string; items: { label: string; href?: string }[] }[];
+
+/**
+ * Letter groups are built in one expression so formatting can't add whitespace.
+ * The sign-off rests on "let’s mango." and stretches to "let’s mangooooo!" on hover.
+ */
+const word: { c: string; cls?: string; j?: number }[] = [
+  { c: 'let’s mango' },
+  { c: '.', cls: 'ch dot' },
+  ...[0, 1, 2, 3].map((j) => ({ c: 'o', cls: 'ch ox', j })),
+  { c: '!', cls: 'ch bang' },
+];
+---
+
+<footer
+  class="hedgehog relative isolate overflow-x-clip bg-white @container"
+  data-hedgehog
+  data-fx-preset={preset}
+>
+  <div
+    class="fx pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+    data-fx
+    aria-hidden="true"
+  >
+    <div class="fx-field absolute inset-x-0 bottom-0 top-footer-band"></div>
+    <div class="fx-shade absolute inset-x-0 bottom-0 h-[55%]" data-fx-shade></div>
+    <div
+      class="fx-shade fx-mango absolute inset-x-0 bottom-0 h-[55%] opacity-0"
+      data-fx-mango
+    ></div>
+  </div>
+
+  <div class="h-footer-band" data-fx-band aria-hidden="true"></div>
+  <!-- Footer v20: the field fills the screen; the sign-off takes the free space and the
+       link grid and base line sit at the bottom. -->
+  <div
+    data-theme={theme}
+    class="container-site flex min-h-[max(100svh,48.75rem)] flex-col bg-transparent pb-[calc(--spacing(8)+env(safe-area-inset-bottom))]"
+  >
+    <div class="flex flex-1 items-center justify-center py-24">
+      <span class="inline-block" data-signoff-mag>
+        <a
+          href={site.contactHref}
+          class="signoff text-signoff relative inline-block px-[.12em] pt-[.08em] pb-[.18em] whitespace-nowrap"
+          aria-label="Get in touch — let’s mango"
+          data-signoff
+        >
+          <span class="inline-block" aria-hidden="true" data-signoff-word>
+            {word.map(({ c, cls, j }) => (
+              <span class={cls} style={j === undefined ? undefined : `--j:${j}`} set:text={c} />
+            ))}
+          </span>
+          <span class="line" aria-hidden="true"></span>
+        </a>
+      </span>
+    </div>
+
+    <div class="grid-site gap-y-10">
+      {columns.map(({ title, items }) => (
+        <section class="hairline-t col-span-full pt-6 md:col-span-4">
+          <h2 class="text-body-s mb-3.5 font-regular tracking-[0.01em] opacity-50">{title}</h2>
+          <ul class="text-body-m flex flex-col gap-2">
+            {items.map(({ label, href }) => (
+              <li>{href ? <a href={href} class="link-draw" set:text={label} /> : label}</li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+
+    <div class="hairline-t text-caption mt-14 flex flex-wrap items-baseline justify-between gap-x-10 gap-y-4 pt-7">
+      <div class="flex items-baseline gap-5">
+        <Logo class="text-logo h-logo-footer shrink-0 self-center" />
+        <p class="text-body-s whitespace-nowrap">{site.tagline}</p>
+      </div>
+      <p>{`© ${new Date().getFullYear()} ${site.name}`}</p>
+    </div>
+    <p class="text-body-s mt-7 max-w-[72ch] opacity-90">{site.acknowledgement}</p>
+  </div>
+</footer>
+
+<script>
+  // Three.js loads only once the footer is near and a fine pointer moves, so page load stays light.
+  const footer = document.querySelector<HTMLElement>('[data-hedgehog]');
+  const ok = (q: string) => matchMedia(q).matches;
+
+  if (
+    footer &&
+    'IntersectionObserver' in window &&
+    ok('(prefers-reduced-motion: no-preference)') &&
+    ok('(hover: hover) and (pointer: fine)')
+  ) {
+    let near = false;
+
+    const cleanup = () => {
+      io.disconnect();
+      removeEventListener('pointermove', onMove);
+    };
+    const onMove = () => {
+      if (!near) {
+        return;
+      }
+
+      cleanup();
+
+      const c = document.createElement('canvas');
+
+      if (!(c.getContext('webgl2') || c.getContext('webgl'))) {
+        return;
+      }
+
+      import('../scripts/hedgehog-footer').then((m) => m.mount(footer)).catch(() => {});
+    };
+    const io = new IntersectionObserver(
+      ([e]) => {
+        near = !!e?.isIntersecting;
+      },
+      { rootMargin: '100% 0px' },
+    );
+
+    io.observe(footer);
+    addEventListener('pointermove', onMove, { passive: true });
+  }
+</script>
+
+<style>
+  /* Footer colours: a flat fill in the section colour, a deeper shade and a pointer glow.
+     The WebGL module reads these too. */
+  .hedgehog {
+    /* The colour at the footer's bottom edge, for the edge strips (src/scripts/edge.ts). */
+    --edge: color-mix(in oklab, var(--fx-shade) 72%, var(--fx-base));
+    --fx-base: var(--color-blorange);
+    --fx-shade: var(--color-fx-orange-shade);
+    --fx-glow: var(--color-fx-orange-glow);
+  }
+  .hedgehog[data-fx-preset='hedgehog'] {
+    --fx-base: var(--color-hedgehog);
+    --fx-shade: var(--color-fx-hedgehog-shade);
+    --fx-glow: var(--color-fx-hedgehog-glow);
+  }
+  .hedgehog[data-fx-preset='green'] {
+    --fx-base: var(--color-skin-green);
+    --fx-shade: var(--color-fx-green-shade);
+    --fx-glow: var(--color-fx-green-glow);
+  }
+  .hedgehog[data-fx-preset='yellow'] {
+    --fx-base: var(--color-skin-yellow);
+    --fx-shade: var(--color-fx-yellow-shade);
+    --fx-glow: var(--color-fx-yellow-glow);
+  }
+  .hedgehog[data-fx-preset='pink'] {
+    --fx-base: var(--color-skin-pink);
+    --fx-shade: var(--color-fx-pink-shade);
+    --fx-glow: var(--color-fx-pink-glow);
+  }
+  .hedgehog[data-fx-preset='blue'] {
+    --fx-base: var(--color-skin-blue);
+    --fx-shade: var(--color-fx-blue-shade);
+    --fx-glow: var(--color-fx-blue-glow);
+  }
+  .hedgehog[data-fx-preset='aqua'] {
+    --fx-base: var(--color-skin-aqua);
+    --fx-shade: var(--color-fx-aqua-shade);
+    --fx-glow: var(--color-fx-aqua-glow);
+  }
+  .hedgehog[data-fx-preset='ultraviolet'] {
+    --fx-base: var(--color-skin-ultraviolet);
+    --fx-shade: var(--color-fx-ultraviolet-shade);
+    --fx-glow: var(--color-fx-ultraviolet-glow);
+  }
+
+  /* Resting field without JS: the flat fill the cheek shows at rest. */
+  .fx-field {
+    background: var(--fx-base);
+  }
+
+  /* A soft wash of the shade over the lower footer, so the small type reads a little better. */
+  .fx-shade {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--fx-shade) 0%, transparent),
+      color-mix(in srgb, var(--fx-shade) 38%, transparent) 45%,
+      color-mix(in srgb, var(--fx-shade) 72%, transparent)
+    );
+  }
+
+  /* The hedgehog orange wash the module fades in while the pointer is over the field. */
+  .fx-mango {
+    --fx-shade: var(--color-fx-hedgehog-shade);
+  }
+
+  /* The canvas is injected by the module; it fades in over the CSS field once it has drawn a frame. */
+  .fx :global(.fx-canvas) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+    transition: opacity var(--duration-slower) var(--ease-standard);
+  }
+  .hedgehog[data-fx-ready] .fx :global(.fx-canvas) {
+    opacity: 1;
+  }
+
+  /* Once the canvas has faded in, the white shows behind slices that lift over the edge, not the flat field. */
+  .hedgehog[data-fx-ready] .fx-field {
+    opacity: 0;
+    transition: opacity 0s var(--duration-slower);
+  }
+
+  /* Sign-off: rests on "let’s mango." On hover the full stop drops away, four more o's roll out ~55ms apart, the
+     "!" lands and bounces, and the underline grows from the middle. Leaving plays it backwards. Timing curves are the
+     prototype's. Only for hover-capable pointers and keyboard focus, and only when motion is welcome. */
+  .signoff {
+    text-decoration: none;
+  }
+  .signoff .ch {
+    display: inline-block;
+    transform-origin: 50% 85%;
+  }
+  .signoff .ox,
+  .signoff .bang {
+    display: none;
+  }
+  .signoff .line {
+    position: absolute;
+    left: 0.12em;
+    right: 0.12em;
+    bottom: 0.02em;
+    height: 0.065em;
+    border-radius: 1em;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: 50% 50%;
+  }
+  .signoff:hover .line,
+  .signoff:focus-visible .line {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .signoff .line {
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.25, 1.15);
+    }
+    .signoff .ox,
+    .signoff .bang {
+      display: inline-block;
+    }
+    .signoff .dot,
+    .signoff .ox,
+    .signoff .bang {
+      max-width: 0.7em;
+      transition:
+        max-width 0.3s cubic-bezier(0.3, 0.8, 0.3, 1.2),
+        opacity 0.2s,
+        transform 0.3s;
+    }
+    .signoff .ox,
+    .signoff .bang {
+      max-width: 0;
+      opacity: 0;
+    }
+    .signoff .ox {
+      transition-delay: calc((3 - var(--j)) * 28ms);
+    }
+    .signoff .dot {
+      transition-delay: 126ms;
+    }
+    .signoff:focus-visible .dot {
+      max-width: 0;
+      opacity: 0;
+      transform: translateY(0.25em);
+      transition-delay: 0s;
+    }
+    .signoff:focus-visible .ox {
+      max-width: 0.62em;
+      opacity: 1;
+      transition-delay: calc(80ms + var(--j) * 55ms);
+    }
+    .signoff:focus-visible .bang {
+      max-width: 0.4em;
+      opacity: 1;
+      transition-delay: 295ms;
+      animation: bang 0.6s 335ms cubic-bezier(0.3, 0.7, 0.4, 1) both;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .signoff:hover .dot {
+      max-width: 0;
+      opacity: 0;
+      transform: translateY(0.25em);
+      transition-delay: 0s;
+    }
+    .signoff:hover .ox {
+      max-width: 0.62em;
+      opacity: 1;
+      transition-delay: calc(80ms + var(--j) * 55ms);
+    }
+    .signoff:hover .bang {
+      max-width: 0.4em;
+      opacity: 1;
+      transition-delay: 295ms;
+      animation: bang 0.6s 335ms cubic-bezier(0.3, 0.7, 0.4, 1) both;
+    }
+  }
+  @keyframes bang {
+    0% {
+      transform: none;
+    }
+    40% {
+      transform: translateY(-0.2em) rotate(12deg) scale(1.15);
+    }
+    100% {
+      transform: rotate(6deg);
+    }
+  }
+</style>

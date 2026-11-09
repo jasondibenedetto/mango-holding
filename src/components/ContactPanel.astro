@@ -1,0 +1,564 @@
+---
+import { site } from '../lib/site';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import Section from './Section.astro';
+
+const steps = [
+  { title: 'Tell us about it', body: 'A few quick questions, about two minutes.' },
+  { title: 'We get back to you', body: 'A lead mango reads it and replies by email.' },
+  { title: 'We get started', body: 'We shape the plan together and kick off.' },
+];
+
+// TODO: confirm timeframe options with Tristan.
+const needs = [
+  'An Embedded Product Team',
+  'An Acceleration Sprint',
+  'Shopify Performance Expertise',
+  'Design Expertise',
+  'Engineering Expertise',
+  'AI Expertise',
+  'Design & Engineering',
+  'Not sure yet',
+];
+const timeframes = [
+  'As soon as possible',
+  'Within a month',
+  'In one to three months',
+  'Later this year',
+];
+const budgets = ['Under $30k', '$30k–$100k', '$100k+', 'Not sure'];
+const sources = [
+  'A recommendation (client, colleague or friend)',
+  'Search engine (Google, Bing)',
+  'AI assistant (ChatGPT, Claude, Perplexity)',
+  'LinkedIn',
+  'Other social media',
+  'Event or talk',
+  'Article, podcast or newsletter',
+  'Other',
+];
+
+const field =
+  'bg-field border-field-stroke bg-clip-padding text-label font-regular rounded-field min-h-field w-full border-[1.5px] px-stack-m pt-[calc(var(--text-caption--line-height)+0.25rem)] placeholder:text-fg-muted placeholder:opacity-0 focus:bg-bg-elevated focus:border-action-ink focus:outline-[0.5px] focus:-outline-offset-2 focus:outline-action-ink focus:placeholder:opacity-100 aria-invalid:border-danger aria-invalid:outline-[0.5px] aria-invalid:-outline-offset-2 aria-invalid:outline-danger';
+const select = `${field} appearance-none pr-14 [&:has(option[value='']:checked)]:text-fg-muted`;
+const floating = 'field-label text-label font-regular text-fg-muted';
+const track =
+  'bg-field border-field-stroke bg-clip-padding rounded-segmented relative isolate overflow-hidden border-[1.5px] p-1 has-aria-invalid:border-danger';
+const pill = 'pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-fast';
+const segment =
+  'text-label rounded-segment relative flex min-h-[calc(var(--spacing-field)-0.5rem)] cursor-pointer items-center justify-center px-inline-m text-center transition-colors duration-base ease-standard not-in-data-js:not-has-checked:hover:bg-card not-in-data-js:has-checked:bg-form-selected has-checked:text-form-selected-fg has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-focus';
+const label = 'text-label';
+const helper = 'text-caption text-fg-muted';
+const error = 'text-caption text-danger';
+---
+
+<Section id="contact" lazy class="bg-form-bg">
+  <div class="grid-site gap-y-stack-l" data-contact>
+    <div class="col-span-full flex flex-col gap-stack-l lg:col-span-5">
+      <h2 class="text-display-m" tabindex="-1" data-title>
+        Get in touch.
+      </h2>
+      <p class="text-body-l text-fg-muted" data-lede>
+        Tell us what you’re working on and we’ll be in touch within the next business day.
+      </p>
+      <ol>
+        {steps.map(({ title, body }) => (
+          <li class="hairline-t flex flex-col gap-1 py-4">
+            <h3 class="text-heading-s">{title}</h3>
+            <p class="text-body-s text-fg-muted">{body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="bg-form-card rounded-l col-span-full self-start px-margin py-stack-l lg:col-span-7">
+      <form method="post" action={site.formAction} class="group flex flex-col gap-stack-m">
+        <fieldset class="contents" data-fields>
+          <fieldset class="flex flex-col gap-2">
+            <legend class:list={[label, 'mb-2']}>Who’s getting in touch?</legend>
+            <div class:list={[track, 'grid grid-cols-2']} data-segmented>
+              <span class:list={[pill, 'bg-card']} data-seg-hover></span>
+              <span class:list={[pill, 'bg-form-selected']} data-seg-checked></span>
+              <label class={segment}>
+                <input type="radio" name="sender" value="person" checked class="sr-only" />A person
+              </label>
+              <label class={segment}>
+                <input type="radio" name="sender" value="agent" id="sender-agent" class="sr-only" />
+                An AI agent
+              </label>
+            </div>
+            <p class:list={[helper, 'hidden group-has-[#sender-agent:checked]:block']}>
+              Bots are fine by us. Tell us who you’re working for and we’ll reply to them.
+            </p>
+            <div class="sr-only" aria-hidden="true">
+              <label>
+                Leave this empty <input name="fax" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="grid gap-x-gutter gap-y-stack-m md:grid-cols-2">
+            <div class="flex flex-col gap-2">
+              <div class="relative">
+                <input
+                  id="contact-name"
+                  name="name"
+                  autocomplete="name"
+                  placeholder="First and last name"
+                  required
+                  data-error="Add a name so we know who to reply to."
+                  class={field}
+                />
+                <label for="contact-name" class={floating}>
+                  <span class="group-has-[#sender-agent:checked]:hidden">Your name</span>
+                  <span class="hidden group-has-[#sender-agent:checked]:inline">On behalf of</span>
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="relative">
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  pattern=".+@.+\..+"
+                  autocomplete="email"
+                  placeholder="you@company.com"
+                  required
+                  data-error="Add an email we can reply to, like you@company.com."
+                  class={field}
+                />
+                <label for="contact-email" class={floating}>
+                  Work email
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="relative">
+                <input
+                  id="contact-company"
+                  name="company"
+                  autocomplete="organization"
+                  placeholder="Company name"
+                  required
+                  data-error="Add your company name."
+                  class={field}
+                />
+                <label for="contact-company" class={floating}>
+                  Company
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="relative">
+                <input
+                  id="contact-website"
+                  name="website"
+                  autocomplete="url"
+                  placeholder="company.com"
+                  required
+                  data-error="Add your website, like company.com."
+                  class={field}
+                />
+                <label for="contact-website" class={floating}>
+                  Website
+                </label>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="relative">
+                <select
+                  id="contact-need"
+                  name="need"
+                  required
+                  data-error="Choose what you need, or Not sure yet."
+                  class={select}
+                >
+                  <option value="" disabled selected>
+                    Choose one
+                  </option>
+                  {needs.map((need) => (
+                    <option>{need}</option>
+                  ))}
+                </select>
+                <label for="contact-need" class={floating}>
+                  What do you need?
+                </label>
+                <Icon
+                  name="chevron"
+                  class="pointer-events-none absolute top-1/2 right-stack-m -translate-y-1/2"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="relative">
+                <select
+                  id="contact-start"
+                  name="start"
+                  required
+                  data-error="Choose a timeframe."
+                  class={select}
+                >
+                  <option value="" disabled selected>
+                    Choose a timeframe
+                  </option>
+                  {timeframes.map((timeframe) => (
+                    <option>{timeframe}</option>
+                  ))}
+                </select>
+                <label for="contact-start" class={floating}>
+                  When do you want to start?
+                </label>
+                <Icon
+                  name="chevron"
+                  class="pointer-events-none absolute top-1/2 right-stack-m -translate-y-1/2"
+                />
+              </div>
+            </div>
+          </div>
+
+          <fieldset class="flex flex-col gap-2">
+            <legend class:list={[label, 'mb-2']}>What’s your budget?</legend>
+            <div class:list={[track, 'grid grid-cols-2 md:flex']} data-segmented>
+              <span class:list={[pill, 'bg-card']} data-seg-hover></span>
+              <span class:list={[pill, 'bg-form-selected']} data-seg-checked></span>
+              {budgets.map((budget, i) => (
+                <label class:list={[segment, 'md:flex-auto']}>
+                  <input
+                    type="radio"
+                    name="budget"
+                    value={budget}
+                    required={i === 0}
+                    data-error={i === 0 ? 'Choose a budget, or Not sure.' : undefined}
+                    class="sr-only"
+                  />
+                  {budget}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <div class="flex flex-col gap-2">
+            <div class="relative">
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="5"
+                placeholder="What you’re working on, and what’s in the way"
+                aria-describedby="contact-message-help"
+                class:list={[
+                  field,
+                  'block pt-[calc((var(--spacing-field)-var(--text-label--line-height)+var(--text-caption--line-height)+0.25rem)/2)]! pb-inline-m',
+                ]}
+              ></textarea>
+              <label for="contact-message" class={floating}>
+                Anything else we should know?
+              </label>
+            </div>
+            <p id="contact-message-help" class:list={[helper, 'px-stack-m']}>
+              Optional. Links, goals and deadlines all help us prepare.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div class="relative">
+              <select
+                id="contact-source"
+                name="source"
+                aria-describedby="contact-source-help"
+                class={select}
+              >
+                <option value="" selected>
+                  Choose one
+                </option>
+                {sources.map((source) => (
+                  <option value={source}>{source}</option>
+                ))}
+              </select>
+              <label for="contact-source" class={floating}>
+                How did you hear about us?
+              </label>
+              <Icon
+                name="chevron"
+                class="pointer-events-none absolute top-1/2 right-stack-m -translate-y-1/2"
+              />
+            </div>
+            <p id="contact-source-help" class:list={[helper, 'px-stack-m']}>
+              Optional.
+            </p>
+          </div>
+
+          <div class="hidden flex-col gap-2 group-has-[option[value='Other']:checked]:flex">
+            <div class="relative">
+              <input id="contact-source-other" name="sourceOther" placeholder=" " class={field} />
+              <label for="contact-source-other" class={floating}>
+                Tell us where
+              </label>
+            </div>
+            <p class:list={[helper, 'px-stack-m']}>Optional.</p>
+          </div>
+        </fieldset>
+
+        <div class="flex flex-col gap-2">
+          <Button type="submit" variant="ink" full>
+            <span data-submit>Submit</span>
+          </Button>
+          <p class:list={[error, 'text-center']} role="status" data-status></p>
+        </div>
+        <p class:list={[helper, 'text-center']}>
+          We only use your details to reply about your project. No mailing lists, no sharing.
+        </p>
+      </form>
+
+      <div hidden class="flex flex-col items-start gap-stack-m" data-sent>
+        <p class="bg-action-ink text-action-ink-fg text-label rounded-pill inline-flex items-center gap-inline-s px-inline-m py-inline-s">
+          <Icon name="check" size={16} />
+          Sent
+        </p>
+        <h3 class="text-heading-m">Your brief is in.</h3>
+        <div class="hairline-t flex w-full flex-col gap-1 pt-stack-s" data-summary></div>
+        <p class={helper}>
+          Something to add? Email{' '}
+          <a href={`mailto:${site.email}`} class="underline underline-offset-2">
+            {site.email}
+          </a>
+          .
+        </p>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  /* Floating label: sits in the field like a placeholder, then shrinks above the value. */
+  .field-label {
+    position: absolute;
+    top: 50%;
+    left: calc(var(--spacing-stack-m) + 1.5px);
+    translate: 0 -50%;
+    transform-origin: left center;
+    pointer-events: none;
+    transition:
+      translate var(--duration-fast) var(--ease-standard),
+      scale var(--duration-fast) var(--ease-standard);
+  }
+
+  input:is(:focus, :not(:placeholder-shown)) ~ .field-label,
+  select:is(:focus, :has(option:checked:not([value='']))) ~ .field-label {
+    translate: 0 calc(-50% - (0.25rem + var(--text-label--line-height)) / 2);
+    /* shortcut: caption over label size at 2xl, within a pixel at other breakpoints */
+    scale: 0.8125;
+  }
+
+  textarea ~ .field-label {
+    top: calc((var(--spacing-field) - var(--text-label--line-height)) / 2);
+    translate: none;
+    transform-origin: left top;
+  }
+
+  textarea:is(:focus, :not(:placeholder-shown)) ~ .field-label {
+    translate: 0 calc((-0.25rem - var(--text-caption--line-height)) / 2);
+    scale: 0.8125;
+  }
+
+  :focus ~ .field-label {
+    color: var(--color-action-ink);
+  }
+
+  [aria-invalid] ~ .field-label {
+    color: var(--color-danger);
+  }
+
+  /* An empty select shows only its label until it opens. */
+  select:not(:focus):has(option[value='']:checked) {
+    color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .field-label {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { segmented } from '../scripts/segmented';
+
+  // Without JavaScript the form still posts natively.
+  const root = document.querySelector<HTMLElement>('[data-contact]');
+  root?.querySelectorAll<HTMLElement>('[data-segmented]').forEach(segmented);
+
+  const form = root?.querySelector('form');
+
+  if (root && form) {
+    const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+    const fields = [...form.querySelectorAll<HTMLInputElement>('[data-error]')];
+    const status = $<HTMLElement>('[data-status]');
+    const submit = $<HTMLElement>('[data-submit]');
+    form.noValidate = true;
+
+    const check = (el: HTMLInputElement) => {
+      const ok = el.checkValidity();
+      const id = `${el.name}-error`;
+      const anchor = el.type === 'radio' ? el.closest('fieldset')! : el.closest('.flex-col')!;
+      let msg = root.querySelector<HTMLElement>(`#${id}`);
+
+      if (!ok && !msg) {
+        msg = Object.assign(document.createElement('p'), {
+          id,
+          className: 'text-caption text-danger px-stack-m',
+        });
+        anchor.append(msg);
+      }
+
+      if (msg) {
+        msg.textContent = ok ? '' : (el.dataset.error ?? el.validationMessage);
+      }
+
+      (el.type === 'radio' ? form.querySelectorAll(`[name=${el.name}]`) : [el]).forEach(
+        (target) => {
+          if (ok) {
+            target.removeAttribute('aria-invalid');
+          } else {
+            target.setAttribute('aria-invalid', 'true');
+          }
+          target.setAttribute('aria-describedby', id);
+        },
+      );
+
+      if (!form.querySelector('[aria-invalid]')) {
+        status.textContent = '';
+      }
+
+      return ok;
+    };
+
+    fields.forEach((el) => {
+      const group = el.type === 'radio' ? form.querySelectorAll(`[name=${el.name}]`) : [el];
+
+      group.forEach((target) => {
+        target.addEventListener('blur', () => {
+          if (el.value) {
+            check(el);
+          }
+        });
+        target.addEventListener('change', () => {
+          if (el.hasAttribute('aria-invalid')) {
+            check(el);
+          }
+        });
+        target.addEventListener('input', () => {
+          if (el.hasAttribute('aria-invalid')) {
+            check(el);
+          }
+        });
+      });
+    });
+
+    const attention = (n: number) => `${n} ${n === 1 ? 'field needs' : 'fields need'} attention.`;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const invalid = fields.filter((el) => !check(el));
+
+      if (invalid.length) {
+        status.textContent = attention(invalid.length);
+        invalid[0]!.focus();
+
+        return;
+      }
+
+      const data = new FormData(form);
+      const locked = $<HTMLFieldSetElement>('[data-fields]');
+      const label = submit.textContent;
+      locked.disabled = true;
+      submit.textContent = 'Sending…';
+      status.textContent = '';
+
+      // The dev server has no /api, so it fakes a successful send.
+      const res = import.meta.env.DEV
+        ? await new Promise<Response>((done) => setTimeout(() => done(Response.json({})), 900))
+        : await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { Accept: 'application/json' },
+          }).catch(() => null);
+
+      // Fields the server rejected get the same inline error as the browser checks
+      const { errors = [] } =
+        res?.status === 422 ? ((await res.json().catch(() => ({}))) as { errors?: string[] }) : {};
+      const rejected = errors.flatMap(
+        (name) => form.querySelector<HTMLInputElement>(`[name="${name}"]`) ?? [],
+      );
+
+      if (rejected.length) {
+        locked.disabled = false;
+        submit.textContent = label;
+
+        rejected.forEach((el) => {
+          el.setCustomValidity('Check this field.');
+          check(el);
+          const clear = () => {
+            el.setCustomValidity('');
+            check(el);
+          };
+          el.addEventListener('input', clear, { once: true });
+          el.addEventListener('change', clear, { once: true });
+        });
+        status.textContent = attention(rejected.length);
+        rejected[0]!.focus();
+
+        return;
+      }
+
+      if (!res?.ok) {
+        locked.disabled = false;
+        submit.textContent = 'Try again';
+        status.textContent = `That didn’t send. Try again, or email ${$<HTMLAnchorElement>('[data-sent] a[href^=mailto]').textContent}.`;
+
+        return;
+      }
+
+      const v = (k: string) => String(data.get(k) ?? '').trim();
+      const agent = v('sender') === 'agent';
+      const rows = [
+        `${v('name')}, ${v('company')}`,
+        `${v('email')} · ${v('website')}`,
+        `${v('need')}, ${v('start').toLowerCase()}`,
+        `Budget ${v('budget')}`,
+      ];
+
+      const show = () => {
+        $<HTMLElement>('[data-title]').textContent = agent
+          ? 'Thanks. We’re on it.'
+          : `Thanks, ${v('name').split(' ')[0]}. We’re on it.`;
+        $<HTMLElement>('[data-lede]').textContent = agent
+          ? `We’ll reply to ${v('name')} at ${v('email')}, the person you’re working for.`
+          : 'A lead mango will read what you sent and reply by email within the next business day.';
+        $<HTMLElement>('[data-summary]').replaceChildren(
+          ...rows.map((row) =>
+            Object.assign(document.createElement('p'), {
+              className: 'text-body-s',
+              textContent: row,
+            }),
+          ),
+        );
+        form.hidden = true;
+        $<HTMLElement>('[data-sent]').hidden = false;
+      };
+
+      if (
+        document.startViewTransition &&
+        matchMedia('(prefers-reduced-motion: no-preference)').matches
+      ) {
+        await document.startViewTransition(show).updateCallbackDone;
+      } else {
+        show();
+      }
+
+      $<HTMLElement>('[data-title]').focus();
+    });
+  }
+</script>

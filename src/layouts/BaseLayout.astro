@@ -1,0 +1,72 @@
+---
+import { Font } from 'astro:assets';
+import type { ComponentProps } from 'astro/types';
+import SEO from '../components/SEO.astro';
+import Logo from '../components/Logo.astro';
+import Button from '../components/Button.astro';
+import { site } from '../lib/site';
+import Footer from '../components/Footer.astro';
+import type { Theme } from '../components/Section.astro';
+import '../styles/global.css';
+
+type Props = ComponentProps<typeof SEO> & {
+  /** The page colour: the hero and nav open in it (Figma: Page rhythm). */
+  theme?: Theme;
+  /** Defaults to the page colour. */
+  footerTheme?: Theme;
+};
+
+const { theme = 'light', footerTheme = theme, ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <Font cssVariable="--font-brand" preload />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO {...seo} />
+    <slot name="head" />
+  </head>
+  <body class="relative flex min-h-svh flex-col">
+    <a
+      href="#main"
+      data-theme="grey"
+      class="rounded-pill text-label sr-only z-50 px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+    >
+      Skip to content
+    </a>
+    <header data-theme={theme} class="absolute inset-x-0 top-0 z-40 bg-transparent">
+      <div class="mt-nav-top flex h-nav-bar items-center justify-between px-margin">
+        <a href="/" class="text-logo flex min-h-tap items-center" aria-label={`${site.name} home`}>
+          <Logo class="h-logo-nav" />
+        </a>
+        <Button href={site.contactHref}>Start a project</Button>
+      </div>
+    </header>
+    <main id="main" class="flex-1 bg-bg">
+      <slot />
+    </main>
+    <!-- Paint html (status bar, overscroll) in the first section's colour before first
+         paint; src/scripts/edge.ts takes over from here. -->
+    <script is:inline>
+      const s = document.querySelector('main [data-theme]');
+
+      if (s) {
+        document.documentElement.style.setProperty(
+          '--edge-top',
+          getComputedStyle(s).backgroundColor,
+        );
+      }
+    </script>
+    <Footer theme={footerTheme} />
+    <script>
+      import '../scripts/edge';
+      import '../scripts/tilt';
+    </script>
+  </body>
+</html>

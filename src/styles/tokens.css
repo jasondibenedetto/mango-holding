@@ -1,0 +1,1089 @@
+/* Design tokens, mirrored from the Figma variables in "Mango Website 2026". Values step at the
+   Figma breakpoint modes and hold their 3xl values on wider screens. */
+
+/* Clear Tailwind's default palette, type scale and breakpoints so only design tokens exist. */
+@theme {
+  --color-*: initial;
+  --text-*: initial;
+  --font-*: initial;
+  --radius-*: initial;
+  --breakpoint-*: initial;
+  --breakpoint-sm: 24.375rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 90rem;
+  --breakpoint-3xl: 120rem;
+
+  /* Primitives (Figma: Primitives collection) */
+  --color-white: #ffffff;
+  --color-cream: #faf4ee;
+  --color-ink: #2d2c2b;
+  --color-grey-50: #f9f4f2;
+  --color-grey-100: #f4ede5;
+  --color-grey-200: #e2ded9;
+  --color-grey-300: #cfcac5;
+  --color-grey-400: #aba6a1;
+  --color-grey-500: #87837f;
+  --color-grey-600: #63605d;
+  --color-grey-700: #44423f;
+  --color-grey-900: #2d2c2b;
+  --color-grey-logo: #c2baaf;
+  --color-blorange: #ff531a;
+  --color-yellow: #ffce00;
+  --color-hedgehog: #ff7e1d;
+  /* Home A2 (Figma: color/a2/*): cobalt page that fades to cream as you scroll. */
+  --color-a2-cobalt: #1e3cff;
+  --color-a2-tangerine: #ffa54f;
+  --color-a2-cream: #fff4e6;
+
+  /* Section skins (Figma: color/skin/*) — bg, deep, soft, line */
+  --color-skin-yellow: #ffce00;
+  --color-skin-yellow-deep: #ebbe00;
+  --color-skin-yellow-soft: #ffdd4d;
+  --color-skin-yellow-line: #b89400;
+  --color-skin-blue: #0061ef;
+  --color-skin-blue-deep: #0051c9;
+  --color-skin-blue-soft: #0059dc;
+  --color-skin-blue-line: #5998f5;
+  --color-skin-green: #02873e;
+  --color-skin-green-deep: #027134;
+  --color-skin-green-soft: #027c39;
+  --color-skin-green-line: #5bb182;
+  --color-skin-aqua: #00a4ff;
+  --color-skin-aqua-deep: #0097eb;
+  --color-skin-aqua-soft: #4dbfff;
+  --color-skin-aqua-line: #0076b8;
+  --color-skin-pink: #ffa1cc;
+  --color-skin-pink-deep: #eb94bc;
+  --color-skin-pink-soft: #ffbddb;
+  --color-skin-pink-line: #b87493;
+  --color-skin-ultraviolet: #3b197f;
+  --color-skin-ultraviolet-deep: #32156b;
+  --color-skin-ultraviolet-soft: #361775;
+  --color-skin-ultraviolet-line: #806aac;
+
+  /* Hedgehog footer (tuner v21): per footer colour, the deeper shade under the
+     slices and the small type, and the glow that follows the pointer */
+  --color-fx-orange-shade: #de002b;
+  --color-fx-orange-glow: #ff9a42;
+  --color-fx-hedgehog-shade: #e44d18;
+  --color-fx-hedgehog-glow: #ffb859;
+  --color-fx-yellow-shade: #e8a300;
+  --color-fx-yellow-glow: #f6ff92;
+  --color-fx-blue-shade: #00548d;
+  --color-fx-blue-glow: #7e7af1;
+  --color-fx-green-shade: #276200;
+  --color-fx-green-glow: #2da486;
+  --color-fx-aqua-shade: #0088b7;
+  --color-fx-aqua-glow: #9dbbff;
+  --color-fx-pink-shade: #d580bd;
+  --color-fx-pink-glow: #ffd8db;
+  --color-fx-ultraviolet-shade: #16005c;
+  --color-fx-ultraviolet-glow: #673b80;
+
+  /* Typography (Figma: type/* and the text styles). Figtree: SemiBold 600 for
+     display, headings and labels, Regular 400 for body and captions, Medium 500
+     for nav items and menu links (Nav Flat); tracking is a fixed share of the
+     size. The family comes from the Astro Fonts API (astro.config.mjs). */
+  --font-sans: var(--font-brand);
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --text-display-xl: 3.25rem;
+  --text-display-xl--line-height: 2.625rem;
+  --text-display-xl--letter-spacing: -0.06em;
+  --text-display-xl--font-weight: 600;
+  --text-display-l: 2.75rem;
+  --text-display-l--line-height: 2.5rem;
+  --text-display-l--letter-spacing: -0.05em;
+  --text-display-l--font-weight: 600;
+  --text-display-m: 2.25rem;
+  --text-display-m--line-height: 2rem;
+  --text-display-m--letter-spacing: -0.04em;
+  --text-display-m--font-weight: 600;
+  --text-heading-l: 1.875rem;
+  --text-heading-l--line-height: 2.0625rem;
+  --text-heading-l--letter-spacing: -0.05em;
+  --text-heading-l--font-weight: 600;
+  --text-heading-m: 1.5rem;
+  --text-heading-m--line-height: 1.75rem;
+  --text-heading-m--letter-spacing: -0.05em;
+  --text-heading-m--font-weight: 600;
+  --text-heading-s: 1.25rem;
+  --text-heading-s--line-height: 1.5625rem;
+  --text-heading-s--letter-spacing: -0.04em;
+  --text-heading-s--font-weight: 600;
+  --text-body-l: 1.125rem;
+  --text-body-l--line-height: 1.625rem;
+  --text-body-l--letter-spacing: -0.02em;
+  --text-body-m: 1rem;
+  --text-body-m--line-height: 1.5rem;
+  --text-body-m--letter-spacing: -0.02em;
+  --text-body-s: 0.875rem;
+  --text-body-s--line-height: 1.3125rem;
+  --text-body-s--letter-spacing: -0.02em;
+  --text-label: 0.9375rem;
+  --text-label--line-height: 1.125rem;
+  --text-label--letter-spacing: -0.02em;
+  --text-label--font-weight: 600;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.0625rem;
+  --text-caption--letter-spacing: -0.02em;
+  /* Footer sign-off (footer v20): the content width / 10.1, so the stretched
+     "let's mangooooo!" always fits. cqw resolves against the footer. */
+  --text-signoff: clamp(
+    1.9375rem,
+    min(100cqw - 2 * var(--spacing-margin), var(--container-content-max)) / 10.1,
+    var(--container-content-max) / 10.1
+  );
+  --text-signoff--line-height: 0.9;
+  --text-signoff--letter-spacing: -0.045em;
+  --text-signoff--font-weight: 600;
+
+  /* Grid (Figma: grid/*): 4 columns, 8 from md, 12 from lg. See the grid-site utility.
+     gutter-tight (half the gutter, a quarter from lg) spaces card, tile, image and logo grids; text layouts keep the gutter. */
+  --grid-columns: 4;
+  --spacing-margin: 1rem;
+  --spacing-gutter: 0.75rem;
+  --spacing-gutter-tight: 0.375rem;
+
+  /* Spacing (Figma: space/*) → p-stack-m, gap-inline-s, py-section… */
+  --spacing-inline-s: 0.5rem;
+  --spacing-inline-m: 0.75rem;
+  --spacing-inline-l: 1.5rem;
+  --spacing-stack-s: 0.5rem;
+  --spacing-stack-m: 1rem;
+  --spacing-stack-l: 2rem;
+  --spacing-stack-xl: 2.5rem;
+  --spacing-section: 4rem;
+  --spacing-hero-top: calc(6.5rem + var(--spacing-safe-top));
+  /* Page headers (Figma: size/hero-min-height) are at least tall enough for three lines of
+     display-l and three of body-l, so every header is the same height. Home is taller. */
+  --spacing-hero-min: calc(
+    var(--spacing-hero-top) + 3 * var(--text-display-l--line-height) + 2 * var(--spacing-stack-l) +
+      3 * var(--text-body-l--line-height)
+  );
+  --spacing-footer-band: 8.75rem;
+  --spacing-tap: 2.75rem;
+  --spacing-tile: 18.75rem;
+  /* Industry tile inner padding (Figma: space/tile-pad) is half the page margin. */
+  --spacing-tile-pad: calc(var(--spacing-margin) / 2);
+  /* Step icons (Figma: size/icon-l) scale with the heading-m title under them. */
+  --spacing-icon-l: calc(var(--text-heading-m) * 0.8);
+
+  /* Nav and footer chrome, from Nav Flat and footer v20 (27 Oct 2026), ahead of
+     Figma's size/nav-height and size/logo-*: a 72px bar 12px from the top, the
+     wordmark 26px tall in the nav (34px from lg) and 22px in the footer. */
+  --spacing-nav-bar: 4.5rem;
+  --spacing-nav-top: calc(0.75rem + var(--spacing-safe-top));
+  /* Under the status bar / notch (viewport-fit=cover); 0 elsewhere. */
+  --spacing-safe-top: env(safe-area-inset-top, 0px);
+  --spacing-logo-nav: 1.625rem;
+  --spacing-logo-footer: 1.375rem;
+  /* Mobile menu pill (Menu pill prototype, 30 Oct 2026): 52px tall, menu-pill-x either
+     side of the icon and label, menu-pill-gap above the bottom safe area. The icon fills
+     what's left of the height, so it sits centred when the pill closes to a circle. */
+  --spacing-menu-pill: 3.25rem;
+  --spacing-menu-pill-x: 1rem;
+  --spacing-menu-pill-gap: 1rem;
+  /* Form fields and the segmented controls that sit beside them (Figma: size/field-height). */
+  --spacing-field: 4rem;
+
+  /* Measures (Figma: size/measure*) → max-w-measure. content-max is the widest the
+     page content gets: the 3xl frame (1920) less its 80px margins. */
+  --container-content-max: 110rem;
+  --container-measure: 40rem;
+  --container-measure-hero: 19.125rem;
+  --container-measure-display: 40rem;
+
+  /* Radii (Figma: radius/*), drawn with Figma's 60% corner smoothing (see global.css).
+     Nested shapes stay concentric: the outer radius is the inner one plus the gap between them. */
+  --radius-s: 0.5rem;
+  --radius-m: 1rem;
+  --radius-l: 1.5rem;
+  --radius-pill: 999px;
+  --radius-nav-link: 0.875rem;
+  --radius-field: 1.5rem;
+  /* Segmented control track and its options, 4px inside it (Figma: radius/segmented). */
+  --radius-segmented: 1.625rem;
+  --radius-segment: 1.375rem;
+
+  /* Motion (Figma: Motion collection) */
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-emphasised: cubic-bezier(0.7, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --duration-instant: 100ms;
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 600ms;
+  --duration-slower: 900ms;
+  /* Tailwind's duration-* utilities read these names. */
+  --transition-duration-instant: var(--duration-instant);
+  --transition-duration-fast: var(--duration-fast);
+  --transition-duration-base: var(--duration-base);
+  --transition-duration-slow: var(--duration-slow);
+  --transition-duration-slower: var(--duration-slower);
+  --transition-duration-spring: var(--duration-spring);
+  /* Tapped buttons, tags and cards shrink to press-scale and spring back. */
+  --press-scale: 0.97;
+
+  /* The same springs as CSS easings. src/scripts/motion.ts derives these easings and durations
+     from --spring-pill-*, --spring-hop-* and --spring-menu-* at runtime; the values here are the no-JS
+     fallback (pill k560 c30 ~8% overshoot, hop k520 c24 ~14%). */
+  --ease-spring: linear(
+    0,
+    0.037,
+    0.124,
+    0.245,
+    0.375,
+    0.512,
+    0.635,
+    0.749,
+    0.841,
+    0.92,
+    0.978,
+    1.021,
+    1.05,
+    1.067,
+    1.074,
+    1.074,
+    1.07,
+    1.062,
+    1.052,
+    1.042,
+    1.032,
+    1.023,
+    1.016,
+    1.009,
+    1.004,
+    1,
+    0.997,
+    0.996,
+    0.995,
+    0.994,
+    0.995,
+    1
+  );
+  --duration-spring: 370ms;
+  --ease-spring-playful: linear(
+    0,
+    0.053,
+    0.178,
+    0.347,
+    0.529,
+    0.696,
+    0.847,
+    0.966,
+    1.05,
+    1.106,
+    1.135,
+    1.142,
+    1.133,
+    1.114,
+    1.09,
+    1.065,
+    1.04,
+    1.02,
+    1.004,
+    0.992,
+    0.984,
+    0.981,
+    0.98,
+    0.981,
+    0.984,
+    0.988,
+    0.991,
+    0.995,
+    0.997,
+    1,
+    1.001,
+    1
+  );
+  --duration-spring-playful: 460ms;
+  --ease-spring-menu: linear(
+    0,
+    0.02,
+    0.068,
+    0.132,
+    0.209,
+    0.289,
+    0.369,
+    0.445,
+    0.517,
+    0.584,
+    0.645,
+    0.699,
+    0.746,
+    0.787,
+    0.824,
+    0.855,
+    0.88,
+    0.903,
+    0.921,
+    0.937,
+    0.95,
+    0.96,
+    0.969,
+    0.976,
+    0.982,
+    0.986,
+    0.99,
+    0.993,
+    0.995,
+    0.996,
+    0.998,
+    1
+  );
+  --duration-spring-menu: 510ms;
+
+  /* Glass (nav shell, menus): grey-100 at glass-alpha resting, glass-alpha-open when
+     a menu is open, over a backdrop blur. */
+  --glass-blur: 20px;
+  --glass-saturate: 1.8;
+  --glass-alpha: 80%;
+  --glass-alpha-open: 96%;
+  /* Scrim: the frosted veil over the page while a menu is open, tuned to Apple's nav.
+     scrim-color at scrim-alpha over a blur, fading in over duration-scrim. */
+  --scrim-color: var(--color-grey-100);
+  --scrim-alpha: 50%;
+  --scrim-blur: 30px;
+  --scrim-saturate: 1;
+  --duration-scrim: 320ms;
+  /* The full-screen mobile menu: solid, so Safari's status bar and toolbar (painted from
+     html, which edge.ts sets to this while it's open) match it exactly. */
+  --color-surface-menu: var(--color-grey-100);
+}
+
+/* Static: only nav.ts reads these, so Tailwind would otherwise drop them. */
+@theme static {
+  /* Springs (stiffness k, damping c, unit mass) for the nav's JS springs (nav.ts). */
+  --spring-pill-k: 560;
+  --spring-pill-c: 30;
+  --spring-shell-k: 380;
+  --spring-shell-c: 34;
+  --spring-shell-close-k: 560;
+  --spring-shell-close-c: 47;
+  --spring-open-k: 520;
+  --spring-open-c: 36;
+  --spring-link-k: 600;
+  --spring-link-c: 44;
+  /* Menu reveal and pill morph: iOS response 0.5s, damping 0.9. */
+  --spring-menu-k: 158;
+  --spring-menu-c: 23;
+  /* Menu pill hiding on scroll: it hides after menu-pill-hide-px of scrolling down,
+     fading and shrinking to menu-pill-hide-scale (ease-spring), and returns on scroll up. */
+  --menu-pill-hide-px: 56;
+  --menu-pill-hide-scale: 0.88;
+  --spring-hop-k: 520;
+  --spring-hop-c: 24;
+  --spring-press-k: 700;
+  --spring-press-c: 30;
+  /* Magnetic menu links: pulled up to magnet-px toward the pointer, with a light bounce back. */
+  --spring-magnet-k: 320;
+  --spring-magnet-c: 15;
+  --magnet-px: 3;
+
+  /* Tilt (data-tilt, src/scripts/tilt.ts): cards pivot up to tilt-max toward the pointer,
+     with a grainy white glow (tilt-shine plus grain) at the pointer. Override them on a card to tune it. */
+  --tilt-max: 3deg;
+  --tilt-perspective: 900px;
+  --tilt-shine: 7.5%;
+  /* -1 puts the glow in the corner opposite the pointer, 1 puts it under the pointer. */
+  --tilt-glare: -1;
+
+  /* Client logos (ClientLogos.astro): optical size, so wide and tall marks carry the same weight.
+     Height is logo-size × ratio^-0.45, capped by logo-max-w and logo-max-h. All in % of the card. */
+  --logo-size: 26cqi;
+  --logo-max-w: 58cqi;
+  --logo-max-h: 35cqi;
+  /* The logo cards tilt and shine harder than the nav card, and the logo leans further. */
+  --logo-tilt-max: 12deg;
+  --logo-tilt-shine: 25%;
+  --logo-magnet-px: 6;
+  /* The logo grid is logo-cols across: 2 by 3, then 3 by 2 from md, 4 by 2 from lg and 5 by 2 from xl.
+     Every logo-flip-every a wave of cards flips to the next clients, rippling out logo-flip-ripple
+     per card from a random start. */
+  --logo-cols: 2;
+  --logo-flip-every: 4s;
+  --logo-flip-ripple: 90ms;
+  --logo-flip-speed: 620ms;
+
+  /* Corner smoothing, Figma's 60% (iOS). corner-shape and corner-scale are fitted to Figma's
+     curve, within half a pixel. corner-mask is Figma's exact corner at radius 100, for Safari. */
+  --corner-shape: superellipse(1.3);
+  --corner-scale: 1.18;
+  --corner-mask: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22321%22%20height%3D%22321%22%3E%3Cpath%20d%3D%22M161%200c56.005%200%2084.008%200%20105.399%2010.899a100%20100%200%200%201%2043.702%2043.702c10.899%2021.391%2010.899%2049.394%2010.899%20105.399L321%20161c0%2056.005%200%2084.008%20-10.899%20105.399a100%20100%200%200%201%20-43.702%2043.702c-21.391%2010.899%20-49.394%2010.899%20-105.399%2010.899L160%20321c-56.005%200%20-84.008%200%20-105.399%20-10.899a100%20100%200%200%201%20-43.702%20-43.702c-10.899%20-21.391%20-10.899%20-49.394%20-10.899%20-105.399L0%20160c0%20-56.005%200%20-84.008%2010.899%20-105.399a100%20100%200%200%201%2043.702%20-43.702c21.391%20-10.899%2049.394%20-10.899%20105.399%20-10.899Z%22%2F%3E%3C%2Fsvg%3E');
+
+  /* Divider strokes: one device pixel on Retina screens, like iOS separators. */
+  --border-hairline: 1px;
+}
+
+/*
+ * Breakpoint modes (Figma: Responsive collection). Only the values that change.
+ */
+@layer theme {
+  :root {
+    @media (resolution >= 2x) {
+      --border-hairline: 0.5px;
+    }
+  }
+
+  /* sm 390 */
+  :root {
+    @variant sm {
+      --text-display-xl: 3.5rem;
+      --text-display-xl--line-height: 2.8125rem;
+      --text-display-l: 3rem;
+      --text-display-l--line-height: 2.6875rem;
+      --text-display-m: 2.5rem;
+      --text-display-m--line-height: 2.25rem;
+      --text-heading-l: 2rem;
+      --text-heading-l--line-height: 2.1875rem;
+      --spacing-section: 4.5rem;
+      --spacing-hero-top: calc(7rem + var(--spacing-safe-top));
+      --container-measure-hero: 20.8125rem;
+    }
+  }
+
+  /* md 768 */
+  :root {
+    @variant md {
+      --spacing-field: 4.25rem;
+      --radius-segmented: 999px;
+      --radius-segment: 999px;
+      --text-display-xl: 6rem;
+      --text-display-xl--line-height: 4.8125rem;
+      --text-display-l: 4.5rem;
+      --text-display-l--line-height: 4.0625rem;
+      --text-display-m: 3.5rem;
+      --text-display-m--line-height: 3.125rem;
+      --text-heading-l: 2.5rem;
+      --text-heading-l--line-height: 2.75rem;
+      --text-heading-m: 1.875rem;
+      --text-heading-m--line-height: 2.1875rem;
+      --text-heading-s: 1.375rem;
+      --text-heading-s--line-height: 1.75rem;
+      --text-body-l: 1.25rem;
+      --text-body-l--line-height: 1.8125rem;
+      --text-body-m: 1.0625rem;
+      --text-body-m--line-height: 1.625rem;
+      --text-body-s: 0.9375rem;
+      --text-body-s--line-height: 1.375rem;
+      --text-caption: 0.8125rem;
+      --text-caption--line-height: 1.125rem;
+      --spacing-inline-m: 1rem;
+      --spacing-inline-l: 2rem;
+      --spacing-stack-s: 0.75rem;
+      --spacing-stack-m: 1.25rem;
+      --spacing-stack-l: 2.5rem;
+      --spacing-stack-xl: 3.5rem;
+      --spacing-section: 6rem;
+      --spacing-hero-top: calc(8.5rem + var(--spacing-safe-top));
+      --spacing-margin: 2rem;
+      --spacing-gutter: 1rem;
+      --spacing-gutter-tight: 0.5rem;
+      --logo-cols: 3;
+      --spacing-footer-band: 12.5rem;
+      --spacing-tile: 20rem;
+      --container-measure-hero: 31rem;
+      --container-measure-display: 51.75rem;
+      --radius-m: 1.25rem;
+      --radius-l: 1.75rem;
+      --grid-columns: 8;
+    }
+  }
+
+  /* lg 1024 */
+  :root {
+    @variant lg {
+      --text-display-xl: 7rem;
+      --text-display-xl--line-height: 5.625rem;
+      --text-display-l: 5.25rem;
+      --text-display-l--line-height: 4.75rem;
+      --text-display-m: 4rem;
+      --text-display-m--line-height: 3.625rem;
+      --text-heading-l: 2.75rem;
+      --text-heading-l--line-height: 3rem;
+      --text-heading-m: 2rem;
+      --text-heading-m--line-height: 2.3125rem;
+      --text-heading-s: 1.5rem;
+      --text-heading-s--line-height: 1.875rem;
+      --text-label: 1rem;
+      --text-label--line-height: 1.1875rem;
+      --spacing-logo-nav: 2.125rem;
+      --spacing-stack-m: 1.5rem;
+      --spacing-stack-l: 3rem;
+      --spacing-stack-xl: 4.5rem;
+      --spacing-section: 7.5rem;
+      --spacing-hero-top: calc(9.375rem + var(--spacing-safe-top));
+      --spacing-margin: 2.5rem;
+      --spacing-gutter: 1.25rem;
+      --spacing-gutter-tight: 0.3125rem;
+      --logo-cols: 4;
+      --spacing-tile: 21.25rem;
+      --container-measure: 42.5rem;
+      --container-measure-hero: 36.125rem;
+      --container-measure-display: 60.375rem;
+      --radius-s: 0.625rem;
+      --radius-l: 2rem;
+      --radius-field: 1.75rem;
+      --spacing-field: 4.5rem;
+      --grid-columns: 12;
+    }
+  }
+
+  /* xl 1280 */
+  :root {
+    @variant xl {
+      --text-display-xl: 8rem;
+      --text-display-xl--line-height: 6.375rem;
+      --text-display-l: 6rem;
+      --text-display-l--line-height: 5.375rem;
+      --text-display-m: 4.5rem;
+      --text-display-m--line-height: 4.0625rem;
+      --text-heading-l: 3rem;
+      --text-heading-l--line-height: 3.3125rem;
+      --text-heading-m: 2.25rem;
+      --text-heading-m--line-height: 2.5625rem;
+      --text-body-l: 1.375rem;
+      --text-body-l--line-height: 2rem;
+      --text-body-m: 1.125rem;
+      --text-body-m--line-height: 1.6875rem;
+      --spacing-inline-s: 0.75rem;
+      --spacing-inline-l: 2.5rem;
+      --spacing-stack-l: 3.5rem;
+      --spacing-stack-xl: 5.5rem;
+      --spacing-section: 8.75rem;
+      --spacing-hero-top: calc(10rem + var(--spacing-safe-top));
+      --spacing-margin: 3rem;
+      --spacing-gutter: 1.5rem;
+      --spacing-gutter-tight: 0.375rem;
+      --logo-cols: 5;
+      --spacing-tile: 22.5rem;
+      --container-measure-hero: 41.1875rem;
+      --container-measure-display: 69rem;
+      --radius-s: 0.75rem;
+      --radius-m: 1.5rem;
+    }
+  }
+
+  /* 2xl 1440 */
+  :root {
+    @variant 2xl {
+      --spacing-field: 4.75rem;
+      --text-display-xl: 9rem;
+      --text-display-xl--line-height: 7.1875rem;
+      --text-display-l: 6.5rem;
+      --text-display-l--line-height: 5.875rem;
+      --text-display-m: 5rem;
+      --text-display-m--line-height: 4.5rem;
+      --text-heading-l: 3.5rem;
+      --text-heading-l--line-height: 3.875rem;
+      --text-heading-m: 2.5rem;
+      --text-heading-m--line-height: 2.875rem;
+      --text-heading-s: 1.75rem;
+      --text-heading-s--line-height: 2.1875rem;
+      --spacing-stack-l: 4rem;
+      --spacing-stack-xl: 6rem;
+      --spacing-section: 10rem;
+      --spacing-margin: 3.5rem;
+      --spacing-tile: 25rem;
+      --container-measure: 45rem;
+      --container-measure-hero: 44.625rem;
+      --container-measure-display: 74.75rem;
+      --radius-l: 2.5rem;
+    }
+  }
+
+  /* 3xl 1920 */
+  :root {
+    @variant 3xl {
+      --spacing-field: 5rem;
+      --radius-field: 2rem;
+      --text-display-xl: 11rem;
+      --text-display-xl--line-height: 8.8125rem;
+      --text-display-l: 8rem;
+      --text-display-l--line-height: 7.1875rem;
+      --text-display-m: 6rem;
+      --text-display-m--line-height: 5.375rem;
+      --text-heading-l: 4rem;
+      --text-heading-l--line-height: 4.375rem;
+      --text-heading-m: 2.75rem;
+      --text-heading-m--line-height: 3.1875rem;
+      --text-heading-s: 1.875rem;
+      --text-heading-s--line-height: 2.375rem;
+      --text-body-l: 1.5rem;
+      --text-body-l--line-height: 2.1875rem;
+      --text-body-m: 1.25rem;
+      --text-body-m--line-height: 1.875rem;
+      --text-body-s: 1rem;
+      --text-body-s--line-height: 1.5rem;
+      --text-label: 1.0625rem;
+      --text-label--line-height: 1.25rem;
+      --text-caption: 0.875rem;
+      --text-caption--line-height: 1.25rem;
+      --spacing-inline-m: 1.25rem;
+      --spacing-inline-l: 3rem;
+      --spacing-stack-s: 1rem;
+      --spacing-stack-m: 2rem;
+      --spacing-stack-l: 5rem;
+      --spacing-stack-xl: 7.5rem;
+      --spacing-section: 12.5rem;
+      --spacing-hero-top: calc(12.5rem + var(--spacing-safe-top));
+      --spacing-margin: 5rem;
+      --spacing-gutter: 2rem;
+      --spacing-gutter-tight: 0.5rem;
+      --spacing-footer-band: 15.625rem;
+      --spacing-tile: 32.5rem;
+      --container-measure: 55rem;
+      --container-measure-hero: 54.8125rem;
+      --container-measure-display: 92rem;
+      --radius-s: 1rem;
+      --radius-m: 2rem;
+      --radius-l: 3rem;
+    }
+  }
+}
+
+/* Semantic, theme-aware colours. `inline` so each utility resolves the
+   variable on the element itself, i.e. inside whichever theme it sits in. */
+@theme inline {
+  --color-headline: var(--t-headline, var(--t-fg));
+  --color-bg: var(--t-bg);
+  --color-bg-elevated: var(--t-bg-elevated);
+  --color-card: var(--t-card);
+  --color-placeholder: var(--t-placeholder);
+  --color-fg: var(--t-fg);
+  --color-fg-muted: var(--t-fg-muted);
+  --color-action: var(--t-action);
+  --color-action-fg: var(--t-action-fg);
+  --color-action-hover: var(--t-action-hover);
+  --color-accent: var(--t-accent);
+  --color-accent-fg: var(--t-accent-fg);
+  --color-border: var(--t-border);
+  --color-field: var(--t-field);
+  --color-field-stroke: var(--t-field-stroke);
+  --color-form-bg: var(--t-form-bg);
+  --color-form-card: var(--t-form-card);
+  /* Form selections and the form's submit button are ink on every theme. */
+  --color-action-ink: var(--color-grey-900);
+  --color-action-ink-hover: var(--color-grey-700);
+  --color-action-ink-fg: var(--color-white);
+  /* Selected segments follow the ink unless a page sets its own (Home A2). */
+  --color-form-selected: var(--t-form-selected, var(--color-action-ink));
+  --color-form-selected-fg: var(--t-form-selected-fg, var(--color-action-ink-fg));
+  --color-focus: var(--t-focus);
+  --color-danger: var(--t-danger);
+  --color-logo: var(--t-logo);
+  --color-client-logo: var(--t-client-logo);
+}
+
+/*
+ * Theme modes (Figma: Theme collection). Values from Foundations › Themes.
+ * Light/Grey/Yellow/Aqua/Pink use ink text; the rest use cream.
+ */
+:root,
+[data-theme='light'] {
+  --t-bg: #ffffff;
+  --t-bg-elevated: #ffffff;
+  --t-card: #f4ede5;
+  --t-placeholder: #f4ede5;
+  --t-fg: #44423f;
+  --t-fg-muted: #63605d;
+  /* Button spec: #E03400 fill (4.51:1 with cream), hover #B02A00. The
+     #FF531A swatch is kept for accents only — cream on it fails AA. The
+     label is white, not cream: cream on #E03400 is only 4.3:1. */
+  --t-action: #e03400;
+  --t-action-fg: #ffffff;
+  --t-action-hover: #b02a00;
+  --t-accent: #ff531a;
+  --t-accent-fg: #faf4ee;
+  --t-border: #2d2c2b24;
+  --t-field: #fbf9f6;
+  --t-field-stroke: #2d2c2b24;
+  --t-focus: #ff531a;
+  --t-danger: #e03400;
+  --t-logo: #2d2c2b;
+  --t-client-logo: var(--color-grey-logo);
+  --t-form-bg: var(--t-card);
+  --t-form-card: var(--t-bg-elevated);
+}
+
+[data-theme='grey'] {
+  --t-bg: #f9f4f2;
+  --t-bg-elevated: #ffffff;
+  --t-card: #f4ede5;
+  --t-placeholder: #f4ede5;
+  --t-fg: #44423f;
+  --t-fg-muted: #63605d;
+  --t-action: #2d2c2b;
+  --t-action-fg: #faf4ee;
+  --t-action-hover: #44423f;
+  --t-accent: #2d2c2b;
+  --t-accent-fg: #faf4ee;
+  --t-border: #2d2c2b24;
+  --t-field: #fbf9f6;
+  --t-field-stroke: #2d2c2b24;
+  --t-focus: #2d2c2b;
+  --t-danger: #e03400;
+  --t-logo: #2d2c2b;
+  --t-client-logo: var(--color-grey-logo);
+}
+
+/* Saturated grounds with ink text */
+[data-theme='yellow'],
+[data-theme='aqua'],
+[data-theme='pink'] {
+  --t-bg-elevated: #faf4ee;
+  --t-fg: #2d2c2b;
+  --t-fg-muted: #44423f;
+  --t-action: #2d2c2b;
+  --t-action-fg: #faf4ee;
+  --t-action-hover: #44423f;
+  --t-accent: #2d2c2b;
+  --t-accent-fg: #faf4ee;
+  --t-border: #2d2c2b24;
+  --t-field-stroke: #2d2c2b3d;
+  --t-focus: #2d2c2b;
+  --t-danger: #2d2c2b;
+  --t-logo: #2d2c2b;
+}
+
+[data-theme='yellow'] {
+  --t-bg: #ffce00;
+  --t-card: #f0c200;
+  --t-placeholder: #ebbe00;
+}
+
+[data-theme='aqua'] {
+  --t-bg: #00a4ff;
+  --t-card: #009af0;
+  --t-placeholder: #0097eb;
+  --t-fg-muted: #2d2c2b;
+}
+
+[data-theme='pink'] {
+  --t-bg: #ffa1cc;
+  --t-card: #f097c0;
+  --t-placeholder: #eb94bc;
+}
+
+/* Saturated grounds with cream text */
+[data-theme='orange'],
+[data-theme='blue'],
+[data-theme='green'],
+[data-theme='ultraviolet'],
+[data-theme='hedgehog'] {
+  --t-fg: #faf4ee;
+  --t-fg-muted: #faf4ee;
+  --t-action: #faf4ee;
+  --t-action-hover: #ffffff;
+  --t-accent: #faf4ee;
+  --t-border: rgb(250 244 238 / 0.3);
+  --t-field-stroke: rgb(250 244 238 / 0.45);
+  --t-focus: #faf4ee;
+  --t-danger: #faf4ee;
+  --t-logo: #faf4ee;
+}
+
+/* Forms sit on a card on colour pages, with fields one step lighter (Figma: color/field, form-card). */
+[data-theme='orange'],
+[data-theme='yellow'],
+[data-theme='blue'],
+[data-theme='green'],
+[data-theme='aqua'],
+[data-theme='pink'],
+[data-theme='ultraviolet'],
+[data-theme='hedgehog'] {
+  --t-field: var(--t-bg-elevated);
+  --t-form-bg: var(--t-bg);
+  --t-form-card: var(--t-card);
+}
+
+/* Client logos sit in a light grey on light and grey pages, and in the section colour on colour pages. */
+[data-theme='orange'],
+[data-theme='yellow'],
+[data-theme='blue'],
+[data-theme='green'],
+[data-theme='aqua'],
+[data-theme='pink'],
+[data-theme='ultraviolet'],
+[data-theme='hedgehog'] {
+  --t-client-logo: var(--t-bg);
+}
+
+[data-theme='orange'] {
+  --t-bg: #ff531a;
+  --t-bg-elevated: #ff6a38;
+  --t-card: #e54b17;
+  --t-placeholder: #e54b17;
+  --t-action-fg: #ff531a;
+  --t-accent-fg: #ff531a;
+}
+
+[data-theme='blue'] {
+  --t-bg: #0061ef;
+  --t-bg-elevated: #0059dc;
+  --t-card: #0057d7;
+  --t-placeholder: #0051c9;
+  --t-action-fg: #0061ef;
+  --t-accent-fg: #0061ef;
+}
+
+[data-theme='green'] {
+  --t-bg: #02873e;
+  --t-bg-elevated: #027c39;
+  --t-card: #027a38;
+  --t-placeholder: #027134;
+  --t-action-fg: #02873e;
+  --t-accent-fg: #02873e;
+}
+
+[data-theme='ultraviolet'] {
+  --t-bg: #3b197f;
+  --t-bg-elevated: #361775;
+  --t-card: #351772;
+  --t-placeholder: #32156b;
+  --t-action-fg: #3b197f;
+  --t-accent-fg: #3b197f;
+}
+
+[data-theme='hedgehog'] {
+  --t-bg: #ff7e1d;
+  --t-bg-elevated: #ff8b33;
+  --t-card: #f0761b;
+  --t-placeholder: #f0761b;
+  --t-action-fg: #ff7e1d;
+  --t-accent-fg: #ff7e1d;
+}
+
+/* Home A2: cream type and tangerine display type on cobalt. Cards are cream at 10%, so
+   they follow the page colour as it fades (src/scripts/scroll-fade.ts). */
+[data-theme='cobalt'] {
+  --t-bg: var(--color-a2-cobalt);
+  --t-bg-elevated: color-mix(in oklab, var(--color-a2-cream) 16%, transparent);
+  --t-card: color-mix(in oklab, var(--color-cream) 10%, transparent);
+  --t-placeholder: color-mix(in oklab, var(--color-cream) 10%, transparent);
+  --t-fg: var(--color-a2-cream);
+  --t-fg-muted: color-mix(in oklab, var(--color-cream) 72%, transparent);
+  --t-headline: var(--color-a2-tangerine);
+  --t-action: var(--color-a2-cream);
+  --t-action-fg: var(--color-a2-cobalt);
+  --t-action-hover: var(--color-white);
+  --t-accent: var(--color-a2-tangerine);
+  --t-accent-fg: var(--color-a2-cobalt);
+  --t-border: color-mix(in oklab, var(--color-a2-cream) 30%, transparent);
+  --t-field-stroke: color-mix(in oklab, var(--color-a2-cream) 45%, transparent);
+  --t-focus: var(--color-a2-cream);
+  --t-danger: var(--color-a2-cream);
+  --t-logo: var(--color-a2-tangerine);
+  --t-client-logo: var(--color-a2-tangerine);
+}
+
+/* Display P3: the Figma file uses the Display P3 profile, so each hex there is a
+   P3 colour. Wide-gamut screens get the same numbers in P3 to match Figma. */
+@media (color-gamut: p3) {
+  :root {
+    --color-white: color(display-p3 1 1 1);
+    --color-cream: color(display-p3 0.9804 0.9569 0.9333);
+    --color-ink: color(display-p3 0.1765 0.1725 0.1686);
+    --color-grey-50: color(display-p3 0.9765 0.9569 0.949);
+    --color-grey-100: color(display-p3 0.9569 0.9294 0.898);
+    --color-grey-200: color(display-p3 0.8863 0.8706 0.851);
+    --color-grey-300: color(display-p3 0.8118 0.7922 0.7725);
+    --color-grey-400: color(display-p3 0.6706 0.651 0.6314);
+    --color-grey-500: color(display-p3 0.5294 0.5137 0.498);
+    --color-grey-600: color(display-p3 0.3882 0.3765 0.3647);
+    --color-grey-700: color(display-p3 0.2667 0.2588 0.2471);
+    --color-grey-900: color(display-p3 0.1765 0.1725 0.1686);
+    --color-grey-logo: color(display-p3 0.7608 0.7294 0.6863);
+    --color-blorange: color(display-p3 1 0.3255 0.102);
+    --color-yellow: color(display-p3 1 0.8078 0);
+    --color-hedgehog: color(display-p3 1 0.4941 0.1137);
+    --color-a2-cobalt: color(display-p3 0.1176 0.2353 1);
+    --color-a2-tangerine: color(display-p3 1 0.6471 0.3098);
+    --color-a2-cream: color(display-p3 1 0.9569 0.902);
+    --color-skin-yellow: color(display-p3 1 0.8078 0);
+    --color-skin-yellow-deep: color(display-p3 0.9216 0.7451 0);
+    --color-skin-yellow-soft: color(display-p3 1 0.8667 0.302);
+    --color-skin-yellow-line: color(display-p3 0.7216 0.5804 0);
+    --color-skin-blue: color(display-p3 0 0.3804 0.9373);
+    --color-skin-blue-deep: color(display-p3 0 0.3176 0.7882);
+    --color-skin-blue-soft: color(display-p3 0 0.349 0.8627);
+    --color-skin-blue-line: color(display-p3 0.349 0.5961 0.9608);
+    --color-skin-green: color(display-p3 0.0078 0.5294 0.2431);
+    --color-skin-green-deep: color(display-p3 0.0078 0.4431 0.2039);
+    --color-skin-green-soft: color(display-p3 0.0078 0.4863 0.2235);
+    --color-skin-green-line: color(display-p3 0.3569 0.6941 0.5098);
+    --color-skin-aqua: color(display-p3 0 0.6431 1);
+    --color-skin-aqua-deep: color(display-p3 0 0.5922 0.9216);
+    --color-skin-aqua-soft: color(display-p3 0.302 0.749 1);
+    --color-skin-aqua-line: color(display-p3 0 0.4627 0.7216);
+    --color-skin-pink: color(display-p3 1 0.6314 0.8);
+    --color-skin-pink-deep: color(display-p3 0.9216 0.5804 0.7373);
+    --color-skin-pink-soft: color(display-p3 1 0.7412 0.8588);
+    --color-skin-pink-line: color(display-p3 0.7216 0.4549 0.5765);
+    --color-skin-ultraviolet: color(display-p3 0.2314 0.098 0.498);
+    --color-skin-ultraviolet-deep: color(display-p3 0.1961 0.0824 0.4196);
+    --color-skin-ultraviolet-soft: color(display-p3 0.2118 0.0902 0.4588);
+    --color-skin-ultraviolet-line: color(display-p3 0.502 0.4157 0.6745);
+    --color-fx-orange-shade: color(display-p3 0.8706 0 0.1686);
+    --color-fx-orange-glow: color(display-p3 1 0.6039 0.2588);
+    --color-fx-hedgehog-shade: color(display-p3 0.8941 0.302 0.0941);
+    --color-fx-hedgehog-glow: color(display-p3 1 0.7216 0.349);
+    --color-fx-yellow-shade: color(display-p3 0.9098 0.6392 0);
+    --color-fx-yellow-glow: color(display-p3 0.9647 1 0.5725);
+    --color-fx-blue-shade: color(display-p3 0 0.3294 0.5529);
+    --color-fx-blue-glow: color(display-p3 0.4941 0.4784 0.9451);
+    --color-fx-green-shade: color(display-p3 0.1529 0.3843 0);
+    --color-fx-green-glow: color(display-p3 0.1765 0.6431 0.5255);
+    --color-fx-aqua-shade: color(display-p3 0 0.5333 0.7176);
+    --color-fx-aqua-glow: color(display-p3 0.6157 0.7333 1);
+    --color-fx-pink-shade: color(display-p3 0.8353 0.502 0.7412);
+    --color-fx-pink-glow: color(display-p3 1 0.8471 0.8588);
+    --color-fx-ultraviolet-shade: color(display-p3 0.0863 0 0.3608);
+    --color-fx-ultraviolet-glow: color(display-p3 0.4039 0.2314 0.502);
+  }
+
+  :root,
+  [data-theme='light'] {
+    --t-bg: color(display-p3 1 1 1);
+    --t-bg-elevated: color(display-p3 1 1 1);
+    --t-card: color(display-p3 0.9569 0.9294 0.898);
+    --t-placeholder: color(display-p3 0.9569 0.9294 0.898);
+    --t-fg: color(display-p3 0.2667 0.2588 0.2471);
+    --t-fg-muted: color(display-p3 0.3882 0.3765 0.3647);
+    --t-action: color(display-p3 0.8784 0.2039 0);
+    --t-action-fg: color(display-p3 1 1 1);
+    --t-action-hover: color(display-p3 0.6902 0.1647 0);
+    --t-accent: color(display-p3 1 0.3255 0.102);
+    --t-accent-fg: color(display-p3 0.9804 0.9569 0.9333);
+    --t-border: color(display-p3 0.1765 0.1725 0.1686 / 0.1412);
+    --t-field: color(display-p3 0.9849 0.9753 0.9643);
+    --t-field-stroke: color(display-p3 0.1765 0.1725 0.1686 / 0.1412);
+    --t-focus: color(display-p3 1 0.3255 0.102);
+    --t-danger: color(display-p3 0.8784 0.2039 0);
+    --t-logo: color(display-p3 0.1765 0.1725 0.1686);
+  }
+
+  [data-theme='grey'] {
+    --t-bg: color(display-p3 0.9765 0.9569 0.949);
+    --t-bg-elevated: color(display-p3 1 1 1);
+    --t-card: color(display-p3 0.9569 0.9294 0.898);
+    --t-placeholder: color(display-p3 0.9569 0.9294 0.898);
+    --t-fg: color(display-p3 0.2667 0.2588 0.2471);
+    --t-fg-muted: color(display-p3 0.3882 0.3765 0.3647);
+    --t-action: color(display-p3 0.1765 0.1725 0.1686);
+    --t-action-fg: color(display-p3 0.9804 0.9569 0.9333);
+    --t-action-hover: color(display-p3 0.2667 0.2588 0.2471);
+    --t-accent: color(display-p3 0.1765 0.1725 0.1686);
+    --t-accent-fg: color(display-p3 0.9804 0.9569 0.9333);
+    --t-border: color(display-p3 0.1765 0.1725 0.1686 / 0.1412);
+    --t-field: color(display-p3 0.9849 0.9753 0.9643);
+    --t-field-stroke: color(display-p3 0.1765 0.1725 0.1686 / 0.1412);
+    --t-focus: color(display-p3 0.1765 0.1725 0.1686);
+    --t-danger: color(display-p3 0.8784 0.2039 0);
+    --t-logo: color(display-p3 0.1765 0.1725 0.1686);
+  }
+
+  [data-theme='yellow'],
+  [data-theme='aqua'],
+  [data-theme='pink'] {
+    --t-bg-elevated: color(display-p3 0.9804 0.9569 0.9333);
+    --t-fg: color(display-p3 0.1765 0.1725 0.1686);
+    --t-fg-muted: color(display-p3 0.2667 0.2588 0.2471);
+    --t-action: color(display-p3 0.1765 0.1725 0.1686);
+    --t-action-fg: color(display-p3 0.9804 0.9569 0.9333);
+    --t-action-hover: color(display-p3 0.2667 0.2588 0.2471);
+    --t-accent: color(display-p3 0.1765 0.1725 0.1686);
+    --t-accent-fg: color(display-p3 0.9804 0.9569 0.9333);
+    --t-border: color(display-p3 0.1765 0.1725 0.1686 / 0.1412);
+    --t-field-stroke: color(display-p3 0.1765 0.1725 0.1686 / 0.2392);
+    --t-focus: color(display-p3 0.1765 0.1725 0.1686);
+    --t-danger: color(display-p3 0.1765 0.1725 0.1686);
+    --t-logo: color(display-p3 0.1765 0.1725 0.1686);
+  }
+
+  [data-theme='yellow'] {
+    --t-bg: color(display-p3 1 0.8078 0);
+    --t-card: color(display-p3 0.9412 0.7608 0);
+    --t-placeholder: color(display-p3 0.9216 0.7451 0);
+  }
+
+  [data-theme='aqua'] {
+    --t-bg: color(display-p3 0 0.6431 1);
+    --t-card: color(display-p3 0 0.6039 0.9412);
+    --t-placeholder: color(display-p3 0 0.5922 0.9216);
+    --t-fg-muted: color(display-p3 0.1765 0.1725 0.1686);
+  }
+
+  [data-theme='pink'] {
+    --t-bg: color(display-p3 1 0.6314 0.8);
+    --t-card: color(display-p3 0.9412 0.5922 0.7529);
+    --t-placeholder: color(display-p3 0.9216 0.5804 0.7373);
+  }
+
+  [data-theme='orange'],
+  [data-theme='blue'],
+  [data-theme='green'],
+  [data-theme='ultraviolet'],
+  [data-theme='hedgehog'] {
+    --t-fg: color(display-p3 0.9804 0.9569 0.9333);
+    --t-fg-muted: color(display-p3 0.9804 0.9569 0.9333);
+    --t-action: color(display-p3 0.9804 0.9569 0.9333);
+    --t-action-hover: color(display-p3 1 1 1);
+    --t-accent: color(display-p3 0.9804 0.9569 0.9333);
+    --t-border: color(display-p3 0.9804 0.9569 0.9333 / 0.3);
+    --t-field-stroke: color(display-p3 0.9804 0.9569 0.9333 / 0.45);
+    --t-focus: color(display-p3 0.9804 0.9569 0.9333);
+    --t-danger: color(display-p3 0.9804 0.9569 0.9333);
+    --t-logo: color(display-p3 0.9804 0.9569 0.9333);
+  }
+
+  [data-theme='orange'] {
+    --t-bg: color(display-p3 1 0.3255 0.102);
+    --t-bg-elevated: color(display-p3 1 0.4157 0.2196);
+    --t-card: color(display-p3 0.898 0.2941 0.0902);
+    --t-placeholder: color(display-p3 0.898 0.2941 0.0902);
+    --t-action-fg: color(display-p3 1 0.3255 0.102);
+    --t-accent-fg: color(display-p3 1 0.3255 0.102);
+  }
+
+  [data-theme='blue'] {
+    --t-bg: color(display-p3 0 0.3804 0.9373);
+    --t-bg-elevated: color(display-p3 0 0.349 0.8627);
+    --t-card: color(display-p3 0 0.3412 0.8431);
+    --t-placeholder: color(display-p3 0 0.3176 0.7882);
+    --t-action-fg: color(display-p3 0 0.3804 0.9373);
+    --t-accent-fg: color(display-p3 0 0.3804 0.9373);
+  }
+
+  [data-theme='green'] {
+    --t-bg: color(display-p3 0.0078 0.5294 0.2431);
+    --t-bg-elevated: color(display-p3 0.0078 0.4863 0.2235);
+    --t-card: color(display-p3 0.0078 0.4784 0.2196);
+    --t-placeholder: color(display-p3 0.0078 0.4431 0.2039);
+    --t-action-fg: color(display-p3 0.0078 0.5294 0.2431);
+    --t-accent-fg: color(display-p3 0.0078 0.5294 0.2431);
+  }
+
+  [data-theme='ultraviolet'] {
+    --t-bg: color(display-p3 0.2314 0.098 0.498);
+    --t-bg-elevated: color(display-p3 0.2118 0.0902 0.4588);
+    --t-card: color(display-p3 0.2078 0.0902 0.4471);
+    --t-placeholder: color(display-p3 0.1961 0.0824 0.4196);
+    --t-action-fg: color(display-p3 0.2314 0.098 0.498);
+    --t-accent-fg: color(display-p3 0.2314 0.098 0.498);
+  }
+
+  [data-theme='hedgehog'] {
+    --t-bg: color(display-p3 1 0.4941 0.1137);
+    --t-bg-elevated: color(display-p3 1 0.5451 0.2);
+    --t-card: color(display-p3 0.9412 0.4627 0.1059);
+    --t-placeholder: color(display-p3 0.9412 0.4627 0.1059);
+    --t-action-fg: color(display-p3 1 0.4941 0.1137);
+    --t-accent-fg: color(display-p3 1 0.4941 0.1137);
+  }
+}
