@@ -1,5 +1,5 @@
 {
-  "name": "mango-coming-soon",
+  "name": "mango-holding",
   "compatibility_date": "2026-10-01",
   "main": "src/worker.ts",
   "ai": { "binding": "AI" },
