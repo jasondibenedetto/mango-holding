@@ -4,12 +4,6 @@ import Button from './Button.astro';
 import Icon from './Icon.astro';
 import Section from './Section.astro';
 
-const steps = [
-  { title: 'Tell us about it', body: 'A few quick questions, about two minutes.' },
-  { title: 'We get back to you', body: 'A lead mango reads it and replies by email.' },
-  { title: 'We get started', body: 'We shape the plan together and kick off.' },
-];
-
 // TODO: confirm timeframe options with Tristan.
 const needs = [
   'An Embedded Product Team',
@@ -53,26 +47,16 @@ const helper = 'text-caption text-fg-muted';
 const error = 'text-caption text-danger';
 ---
 
-<Section id="contact" lazy class="bg-form-bg">
-  <div class="grid-site gap-y-stack-l" data-contact>
-    <div class="col-span-full flex flex-col gap-stack-l lg:col-span-5">
-      <h2 class="text-display-m" tabindex="-1" data-title>
-        Get in touch.
-      </h2>
-      <p class="text-body-l text-fg-muted" data-lede>
-        Tell us what you’re working on and we’ll be in touch within the next business day.
-      </p>
-      <ol>
-        {steps.map(({ title, body }) => (
-          <li class="hairline-t flex flex-col gap-1 py-4">
-            <h3 class="text-heading-s">{title}</h3>
-            <p class="text-body-s text-fg-muted">{body}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
+<Section id="contact" theme="cobalt" class="contact bg-transparent">
+  <div class="flex flex-col items-center gap-stack-l" data-contact>
+    <h2 class="text-center text-display-m" tabindex="-1" data-title>
+      Get in touch.
+    </h2>
+    <p hidden class="max-w-measure text-center text-body-l" data-lede>
+      Tell us what you’re working on and we’ll be in touch within the next business day.
+    </p>
 
-    <div class="bg-form-card rounded-l col-span-full self-start px-margin py-stack-l lg:col-span-7">
+    <div data-theme="light" class="form-card rounded-l w-full bg-white px-margin py-stack-l">
       <form method="post" action={site.formAction} class="group flex flex-col gap-stack-m">
         <fieldset class="contents" data-fields>
           <fieldset class="flex flex-col gap-2">
@@ -331,6 +315,13 @@ const error = 'text-caption text-danger';
 </Section>
 
 <style>
+  /* The card spans 7 of the 12 grid columns from lg, centred. */
+  @media (width >= 64rem) {
+    .form-card {
+      max-width: calc((100% - 11 * var(--spacing-gutter)) * 7 / 12 + 6 * var(--spacing-gutter));
+    }
+  }
+
   /* Floating label: sits in the field like a placeholder, then shrinks above the value. */
   .field-label {
     position: absolute;
@@ -537,6 +528,7 @@ const error = 'text-caption text-danger';
         $<HTMLElement>('[data-lede]').textContent = agent
           ? `We’ll reply to ${v('name')} at ${v('email')}, the person you’re working for.`
           : 'A lead mango will read what you sent and reply by email within the next business day.';
+        $<HTMLElement>('[data-lede]').hidden = false;
         $<HTMLElement>('[data-summary]').replaceChildren(
           ...rows.map((row) =>
             Object.assign(document.createElement('p'), {

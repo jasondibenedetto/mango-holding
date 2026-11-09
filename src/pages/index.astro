@@ -46,54 +46,37 @@ const schema = [
 ---
 
 <BaseLayout theme="cobalt" footerTheme="hedgehog" schema={schema}>
-  {/* One colour behind the hero and clients that fades to cream as you scroll. */}
-  <div data-scroll-fade data-theme="cobalt">
+  {/* One fade from cobalt behind the hero to white where the footer begins. */}
+  <div class="fade" data-theme="cobalt">
     <Section
       theme="cobalt"
       pad={false}
-      class="flex flex-col gap-stack-l bg-transparent pt-[calc(var(--spacing-hero-top)+var(--spacing-stack-xl))] pb-section"
+      class="flex flex-col items-center gap-stack-xl bg-transparent pt-[calc(var(--spacing-hero-top)+var(--spacing-stack-xl))]"
     >
-      <h1 class="text-display-l max-w-measure-display text-headline">
-        Design and engineering for teams building world‑class digital products.
-      </h1>
-      <p class="text-body-l max-w-measure">{site.description}</p>
+      <div class="flex flex-col items-center gap-stack-m text-center">
+        <h1 class="text-display-m text-headline">
+          Design and engineering for teams <br class="max-xl:hidden" />
+          building world‑class digital products.
+        </h1>
+        <p class="text-body-l">New website coming soon.</p>
+      </div>
+      <div class="w-full" aria-label="Clients">
+        <ClientLogos />
+      </div>
     </Section>
 
-    <Section
-      theme="cobalt"
-      pad={false}
-      class="bg-transparent pb-section"
-      aria-label="Clients"
-      data-scroll-fade-track
-    >
-      <ClientLogos />
-    </Section>
+    <ContactPanel />
   </div>
-
-  <ContactPanel />
 </BaseLayout>
 
-<script>
-  import '../scripts/scroll-fade';
-</script>
-
 <style>
-  /* The contact form selections are cobalt and the section fades to white. */
+  .fade {
+    background-image: linear-gradient(var(--color-a2-cobalt) 45%, var(--color-white));
+  }
+
+  /* The contact form selections are cobalt. */
   :global(#contact) {
     --t-form-selected: var(--color-a2-cobalt);
     --t-form-selected-fg: var(--color-a2-cream);
-    background-image: linear-gradient(var(--color-form-bg) 56%, var(--color-white));
-  }
-
-  /* Logo cards turn white once the fade reaches cream so they stand off it. */
-  [data-scroll-fade] :global([data-theme='light']) {
-    --t-card: var(--color-white);
-  }
-
-  /* Type and cards ease across when the fade flips the theme. */
-  [data-scroll-fade] :global(:is(h1, p, ul > li)) {
-    transition-property: color, background-color;
-    transition-duration: var(--duration-base);
-    transition-timing-function: var(--ease-standard);
   }
 </style>
