@@ -37,7 +37,10 @@ export const site = {
     ],
   },
 
-  /** Key clients from Figma "10 Client logos". Each slug has a mono SVG in src/assets/clients. */
+  /**
+   * Key clients from Figma "10 Client logos" first, then every other current client. Each slug has a
+   * mono SVG in src/assets/clients. boost enlarges a fine-lined mark that reads small at its optical size.
+   */
   clients: [
     { slug: 'cancer-council', name: 'Cancer Council' },
     { slug: 'optus', name: 'Optus' },
@@ -55,5 +58,43 @@ export const site = {
     { slug: 'qantas', name: 'Qantas' },
     { slug: 'world-vision', name: 'World Vision' },
     { slug: 'schneider-electric', name: 'Schneider Electric' },
+    { slug: 'adaptly', name: 'Adaptly' },
+    { slug: 'animal-welfare-league', name: 'Animal Welfare League SA' },
+    { slug: 'austral-clotheslines', name: 'Austral Clotheslines' },
+    { slug: 'amwa', name: "Australian Multicultural Women's Alliance" },
+    { slug: 'camp-quality', name: 'Camp Quality' },
+    { slug: 'chiaprt', name: 'Centre for Health in All Policies Research Translation' },
+    { slug: 'eha', name: 'Eastern Health Authority' },
+    { slug: 'ezlicence', name: 'EzLicence' },
+    { slug: 'fecca', name: "Federation of Ethnic Communities' Councils of Australia" },
+    { slug: 'findon-high-school', name: 'Findon High School' },
+    { slug: 'flinders-foundation', name: 'Flinders Foundation' },
+    { slug: 'flinders-university', name: 'Flinders University' },
+    { slug: 'gleamin', name: 'Gleamin' },
+    { slug: 'hireup', name: 'Hireup' },
+    { slug: 'jones-radiology', name: 'Jones Radiology' },
+    { slug: 'justicenet', name: 'JusticeNet SA' },
+    { slug: 'leukaemia-foundation', name: 'Leukaemia Foundation' },
+    { slug: 'lk-law', name: 'LK Law' },
+    { slug: 'lusta', name: 'Lusta Hair' },
+    { slug: 'neura', name: 'Neuroscience Research Australia' },
+    { slug: 'open-gardens-sa', name: 'Open Gardens SA', boost: 1.3 },
+    { slug: 'parkbooker', name: 'Parkbooker' },
+    { slug: 'radiology-sa', name: 'Radiology SA', boost: 1.5 },
+    {
+      slug: 'ranzcog',
+      name: 'Royal Australian and New Zealand College of Obstetricians and Gynaecologists',
+    },
+    { slug: 'sa-cfs', name: 'SA Country Fire Service' },
+    { slug: 'sa-power-networks', name: 'SA Power Networks', boost: 1.3 },
+    { slug: 'sa-ses', name: 'SA State Emergency Service' },
+    { slug: 'sahmri', name: 'South Australian Health and Medical Research Institute', boost: 1.3 },
+    { slug: 'the-people-plugin', name: 'The People Plugin' },
+    { slug: 'trend-rocket', name: 'Trend Rocket' },
+    { slug: 'volliecare', name: 'VollieCare' },
+    { slug: 'walford', name: 'Walford Anglican School for Girls' },
+    { slug: 'wilderness-school', name: 'Wilderness School' },
+    { slug: 'women-lawyers-sa', name: "Women Lawyers' Association of South Australia" },
+    { slug: 'wlsq', name: "Women's Legal Service Queensland" },
   ],
 } as const;

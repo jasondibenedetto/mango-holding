@@ -7,7 +7,9 @@ const svgs = import.meta.glob<string>('../assets/clients/*.svg', {
   eager: true,
 });
 
-const logos = site.clients.map(({ slug, name }) => {
+const logos = site.clients.map((client) => {
+  const { slug, name } = client;
+  const boost = 'boost' in client ? client.boost : 1;
   const svg = svgs[`../assets/clients/${slug}.svg`];
   const [, , w, h] = svg
     .match(/viewBox="([^"]+)"/)![1]
@@ -18,7 +20,7 @@ const logos = site.clients.map(({ slug, name }) => {
   return {
     name,
     ratio: ratio.toFixed(3),
-    scale: (ratio ** -0.45).toFixed(3),
+    scale: (ratio ** -0.45 * boost).toFixed(3),
     svg: svg.replace(/^<svg([^>]*?)\s(width|height)="[^"]*"\s(width|height)="[^"]*"/, '<svg$1'),
   };
 });
