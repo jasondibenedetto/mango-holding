@@ -542,6 +542,7 @@ export function mount(footer: HTMLElement): () => void {
   };
   const onLeave = () => {
     hovering = false;
+    overCta = false;
     cx = cy = -1e4;
     magKick();
   };
@@ -552,7 +553,13 @@ export function mount(footer: HTMLElement): () => void {
       magKick();
     }
   };
-  const onCtaEnter = () => {
+  // Enter can fire with no pointermove first, such as when a scroll slides the link under a still pointer.
+  const onCtaEnter = (e: PointerEvent) => {
+    if (e.pointerType !== 'mouse' && e.pointerType !== 'pen') {
+      return;
+    }
+
+    toNdc(e.clientX, e.clientY);
     overCta = true;
     magKick();
   };
