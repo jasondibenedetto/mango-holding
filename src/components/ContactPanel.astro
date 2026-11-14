@@ -139,6 +139,7 @@ const error = 'text-caption text-danger';
                 <input
                   id="contact-website"
                   name="website"
+                  pattern="\S+\.\S+"
                   autocomplete="url"
                   placeholder="company.com"
                   required
@@ -388,6 +389,14 @@ const error = 'text-caption text-danger';
     const status = $<HTMLElement>('[data-status]');
     const submit = $<HTMLElement>('[data-submit]');
     form.noValidate = true;
+
+    // The worker drops any brief with "Tell us where" filled but Other not chosen
+    const source = $<HTMLSelectElement>('#contact-source');
+    source.addEventListener('change', () => {
+      if (source.value !== 'Other') {
+        $<HTMLInputElement>('#contact-source-other').value = '';
+      }
+    });
 
     const check = (el: HTMLInputElement) => {
       const ok = el.checkValidity();
