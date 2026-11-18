@@ -11,7 +11,7 @@ collaborates. Several people and sessions may be working at once.
 
 - **For now, commit straight to `main`** (Jason, 30 Oct 2026). Pull requests come back once the
   site is more established. Every push to `main` deploys to
-  https://mango-website.mango-chutney.workers.dev/, so check it after you push.
+  https://mangochutney.com.au/, so check it after you push.
 - Iterate locally and push only what is settled. Experiments and design trials stay on a local
   branch that is never pushed.
 - One focused change per commit, with a message that says what and why. Squash trial-and-undo

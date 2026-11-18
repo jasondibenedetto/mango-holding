@@ -100,7 +100,7 @@ Content is edited by people across the agency, often through Claude.
 
 ## Git
 
-- For now, commit straight to `main`. Pull requests come back once the site is more established. Every push to `main` deploys to https://mango-website.mango-chutney.workers.dev/.
+- For now, commit straight to `main`. Pull requests come back once the site is more established. Every push to `main` deploys to https://mangochutney.com.au/.
 - `npm run verify` must pass before you commit. Run `npm run lighthouse` too when the change can affect performance.
 - One focused change per commit, with a message that says what and why.
 - Never commit `.env` files, build output or secrets.
