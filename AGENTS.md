@@ -82,7 +82,7 @@ The design comes from the Figma file "Mango Website 2026" (file key `L5wXgxDWbLa
 - Exactly one `<h1>` per page. Headings in order. Descriptive link text. No text baked into images.
 - Page-specific structured data goes in the `schema` prop as JSON-LD: Organization and WebSite on home, BreadcrumbList on case studies. Articles set `type="article"` and pass their image.
 - New routes are added to the sitemap automatically. Never block them in `robots.txt`.
-- Every build is noindex with a disallow-all `robots.txt` unless `PUBLIC_INDEXABLE=true`. Only the production deploy sets it.
+- Every build is noindex with a disallow-all `robots.txt` unless `PUBLIC_INDEXABLE=true`. `wrangler deploy` sets it through the build command in `wrangler.jsonc`.
 
 ## Accessibility
 

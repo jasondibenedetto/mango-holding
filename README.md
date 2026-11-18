@@ -10,4 +10,4 @@ collections removed.
 - `npm run verify` checks formatting and types, then builds.
 - `npm run lighthouse` asserts the performance budgets.
 
-Every build is noindex unless `PUBLIC_INDEXABLE=true`, which only the production deploy sets.
+Every build is noindex unless `PUBLIC_INDEXABLE=true`, which `wrangler deploy` sets through the build command in `wrangler.jsonc`.

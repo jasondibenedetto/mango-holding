@@ -2,6 +2,8 @@
   "name": "mango-holding",
   "compatibility_date": "2026-10-01",
   "main": "src/worker.ts",
+  // Every deploy is production, so build it indexable
+  "build": { "command": "PUBLIC_INDEXABLE=true npx astro build" },
   "ai": { "binding": "AI" },
   "assets": {
     "directory": "./dist",
